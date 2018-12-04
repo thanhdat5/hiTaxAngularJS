@@ -1,10 +1,11 @@
 ﻿(function (app) {
 	app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService', 'authenticationService', '$state',
 		function ($scope, loginService, $injector, notificationService, authenticationService, $state) {
-			var token = authenticationService.getTokenInfo();
-			if (token) {
-				$state.go('admin');
-			}
+			authenticationService.getTokenFromLocalStogare().then(function (data) {
+				if (data != null && data != undefined) {
+					$state.go('admin');
+				}
+			});
 			$scope.loginData = {
 				userName: "",
 				password: ""

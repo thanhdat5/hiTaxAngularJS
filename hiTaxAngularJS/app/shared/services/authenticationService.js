@@ -13,6 +13,11 @@
 				return tokenInfo;
 			}
 
+			this.getTokenFromLocalStogare = async function () {
+				await null;
+				return localStorageService.get("TokenInfo");
+			}
+
 			this.removeToken = function () {
 				tokenInfo = null;
 				localStorageService.set("TokenInfo", null);

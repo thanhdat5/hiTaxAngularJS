@@ -4,10 +4,11 @@
     rootController.$inject = ['$state', 'authData', 'loginService', '$scope', 'authenticationService'];
 
 	function rootController($state, authData, loginService, $scope, authenticationService) {
-		var token = authenticationService.getTokenInfo();
-		if (!token) {
-			$state.go('login');
-		}
+		authenticationService.getTokenFromLocalStogare().then(function (data) {
+			if (data == null || data == undefined) {
+				$state.go('login');
+			}
+		});
         $scope.logOut = function () {
             loginService.logOut();
         }
