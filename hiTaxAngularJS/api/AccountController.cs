@@ -63,8 +63,8 @@ namespace hiTaxAngularJS.Web.Api
         }
 
         [HttpPost]
-        [Authorize]
-        [Route("logout")]
+		[AllowAnonymous]
+		[Route("logout")]
         public HttpResponseMessage Logout(HttpRequestMessage request)
         {
             var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;

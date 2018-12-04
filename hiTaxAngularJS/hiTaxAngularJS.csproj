@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201812041746080_InitDb.Designer.cs">
       <DependentUpon>201812041746080_InitDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812042141164_UpdateSomething.cs" />
+    <Compile Include="Migrations\201812042141164_UpdateSomething.Designer.cs">
+      <DependentUpon>201812042141164_UpdateSomething.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -245,6 +249,7 @@
     <Compile Include="Models\InvoiceDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Response\ApplicationUserResponse.cs" />
     <Compile Include="Models\TaxValue.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -5092,6 +5097,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812041746080_InitDb.resx">
       <DependentUpon>201812041746080_InitDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812042141164_UpdateSomething.resx">
+      <DependentUpon>201812042141164_UpdateSomething.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

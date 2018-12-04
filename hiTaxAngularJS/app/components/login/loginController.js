@@ -1,7 +1,10 @@
 ﻿(function (app) {
-	app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService',
-		function ($scope, loginService, $injector, notificationService) {
-
+	app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService', 'authenticationService', '$state',
+		function ($scope, loginService, $injector, notificationService, authenticationService, $state) {
+			var token = authenticationService.getTokenInfo();
+			if (token) {
+				$state.go('admin');
+			}
 			$scope.loginData = {
 				userName: "",
 				password: ""
@@ -10,12 +13,12 @@
 			$scope.loginSubmit = function () {
 				loginService.login($scope.loginData.userName, $scope.loginData.password).then(
 					function (response) {
-						if (response != null && response.data.error != undefined) {
-							notificationService.displayError(response.data.error_description);
+						if (response != null) {
+							notificationService.displayError("[Internal Server Error] " + response.statusText);
 						}
 						else {
 							var stateService = $injector.get('$state');
-							stateService.go('home');
+							stateService.go('admin');
 						}
 					}, function (error) {
 						notificationService.displayError("Username or password is invalid.");

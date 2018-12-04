@@ -25,7 +25,7 @@
 				templateUrl: "/app/components/login/loginView.html",
 				controller: "loginController"
 			})
-			.state('home', {
+			.state('admin', {
 				url: "/admin",
 				parent: 'base',
 				templateUrl: "/app/components/home/homeView.html",
