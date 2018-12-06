@@ -1,0 +1,112 @@
+﻿<div class="">
+	<div id="user-profile-1" class="user-profile row">
+		<div class="col-xs-12 col-sm-3 center">
+			<div>
+				<span class="profile-picture">
+					<img id="avatar" class="editable img-responsive editable-click editable-empty" alt="Nguyễn Thanh Đạt's Avatar" src="">
+					<div class="clearfix"></div>
+					<input type="file" id="uploadEditorImage" onclick="resetFileSelect()" accept="image/x-png,image/gif,image/jpeg">
+				</span>
+
+				<div class="space-4"></div>
+
+				<div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
+					<div class="inline position-relative">
+						<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
+							<i class="ace-icon fa fa-circle light-green"></i>
+							&nbsp;
+							<span class="hidden" id="lblID">1</span>
+							<span class="white" id="lblFullName">Nguyễn Thanh Đạt</span>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="space-6"></div>
+
+			<div class="hr hr16 dotted"></div>
+		</div>
+
+		<div class="col-xs-12 col-sm-9">
+
+			<div class="profile-user-info profile-user-info-striped">
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Username<span class="text-danger">*</span> </div>
+
+					<div class="profile-info-value">
+						<input type="text" id="txtUserName" name="txtUserName" class="form-control" readonly="readonly">
+					</div>
+				</div>
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Password<span class="text-danger">*</span> </div>
+
+					<div class="profile-info-value">
+						<input type="password" id="txtPassword" name="txtPassword" class="form-control">
+					</div>
+				</div>
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Confirm Password<span class="text-danger">*</span> </div>
+
+					<div class="profile-info-value">
+						<input type="password" id="txtConfirmPassword" name="txtConfirmPassword" class="form-control">
+					</div>
+				</div>
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Company<span class="text-danger">*</span> </div>
+
+					<div class="profile-info-value">
+						<span class="hidden" id="lblCompanyID"></span>
+						<select id="ddlCompany" name="ddlCompany" class="form-control"><option value="1">FPT Software</option><option value="2">Petronas</option></select>
+					</div>
+				</div>
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Full Name<span class="text-danger">*</span> </div>
+
+					<div class="profile-info-value">
+						<input type="text" id="txtFullName" name="txtFullName" class="form-control">
+					</div>
+				</div>
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Location </div>
+
+					<div class="profile-info-value">
+						<textarea id="txtLocation" name="txtLocation" class="form-control"></textarea>
+					</div>
+				</div>
+
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Age </div>
+
+					<div class="profile-info-value">
+						<input type="number" id="txtAge" name="txtAge" class="form-control">
+					</div>
+				</div>
+
+				<div class="profile-info-row">
+					<div class="profile-info-name"> Last Online </div>
+
+					<div class="profile-info-value">
+						<span class="editable editable-click" id="lblLastOnline">6 tháng trước</span>
+					</div>
+				</div>
+
+				<div class="profile-info-row">
+					<div class="profile-info-name"> About Me </div>
+
+					<div class="profile-info-value">
+						<textarea id="txtAboutMe" name="txtAboutMe" class="form-control"></textarea>
+					</div>
+				</div>
+				<div class="profile-info-row">
+					<div class="profile-info-name"></div>
+
+					<div class="profile-info-value">
+						<button id="btnSaveChanges" name="btnSaveChanges" type="button" onclick="saveChangesClick()" class="btn btn-success btn-sm">Save Changes</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="space-20"></div>
+		</div>
+	</div>
+</div>

@@ -25,10 +25,10 @@
 				<li class="light-blue">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 						<!--<img class="nav-user-photo" width="35" height="35" style="max-height:40px" ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/Content/images/NoImage.gif'}}" alt="{{item.levelName}}" err-src='/Content/images/NoImage.gif' onerror="this.src ='/assets/images/NoAvatar.jpg'" />-->
-						<img class="nav-user-photo" width="35" height="35" style="max-height:40px" ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/Content/images/NoImage.gif'}}" alt="{{item.levelName}}" err-src='/Content/images/NoImage.gif' onerror="this.src ='/Content/images/NoImage.gif'" />
+						<img class="nav-user-photo" width="35" height="35" style="max-height:40px" ng-src="{{authentication.UserInfo.ImagePath != null && authentication.UserInfo.ImagePath !='' ? authentication.UserInfo.ImagePath : '/Content/images/NoImage.gif'}}" alt="{{authentication.UserInfo.DisplayName}}" err-src='/Content/images/NoImage.gif' onerror="this.src ='/Content/images/NoImage.gif'" />
 						<span class="user-info">
 							<small>Welcome,</small>
-							<span id="x-logged-username">xxx</span>
+							<span>{{authentication.UserInfo.DisplayName}}</span>
 						</span>
 						<i class="ace-icon fa fa-caret-down"></i>
 					</a>

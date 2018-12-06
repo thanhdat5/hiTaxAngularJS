@@ -244,6 +244,14 @@
     <Compile Include="Migrations\201812042141164_UpdateSomething.Designer.cs">
       <DependentUpon>201812042141164_UpdateSomething.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812060357136_UpdateSomething2.cs" />
+    <Compile Include="Migrations\201812060357136_UpdateSomething2.Designer.cs">
+      <DependentUpon>201812060357136_UpdateSomething2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812060425144_UpdateSomething3.cs" />
+    <Compile Include="Migrations\201812060425144_UpdateSomething3.Designer.cs">
+      <DependentUpon>201812060425144_UpdateSomething3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -283,6 +291,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\components\profile\profileController.js" />
+    <Content Include="app\components\profile\profileView.html" />
     <Content Include="app\components\products\productListController.js" />
     <Content Include="app\components\products\productListView.html" />
     <Content Include="app\components\products\products.module.js" />
@@ -5140,6 +5150,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812042141164_UpdateSomething.resx">
       <DependentUpon>201812042141164_UpdateSomething.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812060357136_UpdateSomething2.resx">
+      <DependentUpon>201812060357136_UpdateSomething2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812060425144_UpdateSomething3.resx">
+      <DependentUpon>201812060425144_UpdateSomething3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -8,126 +8,165 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using hiTax.Web;
 using hiTaxAngularJS.Models;
+using hiTaxAngularJS.Models.Response;
+using Microsoft.AspNet.Identity;
 
 namespace hiTaxAngularJS.Api
 {
-    public class ApplicationUsersController : ApiController
-    {
-        private hiTaxAngularJSDbContext db = new hiTaxAngularJSDbContext();
+	public class ApplicationUsersController : ApiControllerBase
+	{
+		private hiTaxAngularJSDbContext db = new hiTaxAngularJSDbContext();
 
-        // GET: api/ApplicationUsers
-        public IQueryable<ApplicationUser> GetApplicationUsers()
-        {
-            return db.ApplicationUsers;
-        }
+		// GET: api/ApplicationUsers
+		public IQueryable<ApplicationUser> GetApplicationUsers()
+		{
+			return db.ApplicationUsers;
+		}
 
-        // GET: api/ApplicationUsers/5
-        [ResponseType(typeof(ApplicationUser))]
-        public IHttpActionResult GetApplicationUser(string id)
-        {
-            ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
+		[Route("api/ApplicationUsers/GetProfile")]
+		public HttpResponseMessage GetProfile(HttpRequestMessage request)
+		{
+			return CreateHttpResponse(request, () =>
+			{
+				HttpResponseMessage response = null;
+				var currentUserId = User.Identity.GetUserId();
+				ApplicationUser applicationUser = db.ApplicationUsers.Find(currentUserId);
+				if (applicationUser == null)
+				{
+					response = request.CreateResponse(HttpStatusCode.NotFound);
+				}
+				else
+				{
+					var company = db.Companies.Find(applicationUser.CompanyId);
+					var companyName = company != null ? company.CompanyName : string.Empty;
+					var result = new ApplicationUserResponse();
+					result.Id = applicationUser.Id;
+					result.CompanyId = applicationUser.CompanyId;
+					result.DisplayName = applicationUser.DisplayName;
+					result.ImagePath = applicationUser.ImagePath;
+					result.Address = applicationUser.Address;
+					result.Age = applicationUser.Age;
+					result.AboutMe = applicationUser.AboutMe;
+					result.Email = applicationUser.Email;
+					result.PhoneNumber = applicationUser.PhoneNumber;
+					result.UserName = applicationUser.UserName;
+					result.PasswordHash = applicationUser.PasswordHash;
+					result.CompanyName = companyName;
+					response = request.CreateResponse(HttpStatusCode.OK, result);
+				}
 
-            return Ok(applicationUser);
-        }
+				return response;
+			});
+		}
 
-        // PUT: api/ApplicationUsers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutApplicationUser(string id, ApplicationUser applicationUser)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+		// GET: api/ApplicationUsers/5
+		[ResponseType(typeof(ApplicationUser))]
+		public IHttpActionResult GetApplicationUser(string id)
+		{
+			ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
+			if (applicationUser == null)
+			{
+				return NotFound();
+			}
 
-            if (id != applicationUser.Id)
-            {
-                return BadRequest();
-            }
+			return Ok(applicationUser);
+		}
 
-            db.Entry(applicationUser).State = EntityState.Modified;
+		// PUT: api/ApplicationUsers/5
+		[ResponseType(typeof(void))]
+		public IHttpActionResult PutApplicationUser(string id, ApplicationUser applicationUser)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ApplicationUserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			if (id != applicationUser.Id)
+			{
+				return BadRequest();
+			}
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+			db.Entry(applicationUser).State = EntityState.Modified;
 
-        // POST: api/ApplicationUsers
-        [ResponseType(typeof(ApplicationUser))]
-        public IHttpActionResult PostApplicationUser(ApplicationUser applicationUser)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			try
+			{
+				db.SaveChanges();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!ApplicationUserExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-            db.ApplicationUsers.Add(applicationUser);
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (ApplicationUserExists(applicationUser.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+		// POST: api/ApplicationUsers
+		[ResponseType(typeof(ApplicationUser))]
+		public IHttpActionResult PostApplicationUser(ApplicationUser applicationUser)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            return CreatedAtRoute("DefaultApi", new { id = applicationUser.Id }, applicationUser);
-        }
+			db.ApplicationUsers.Add(applicationUser);
 
-        // DELETE: api/ApplicationUsers/5
-        [ResponseType(typeof(ApplicationUser))]
-        public IHttpActionResult DeleteApplicationUser(string id)
-        {
-            ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
+			try
+			{
+				db.SaveChanges();
+			}
+			catch (DbUpdateException)
+			{
+				if (ApplicationUserExists(applicationUser.Id))
+				{
+					return Conflict();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-            db.ApplicationUsers.Remove(applicationUser);
-            db.SaveChanges();
+			return CreatedAtRoute("DefaultApi", new { id = applicationUser.Id }, applicationUser);
+		}
 
-            return Ok(applicationUser);
-        }
+		// DELETE: api/ApplicationUsers/5
+		[ResponseType(typeof(ApplicationUser))]
+		public IHttpActionResult DeleteApplicationUser(string id)
+		{
+			ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
+			if (applicationUser == null)
+			{
+				return NotFound();
+			}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+			db.ApplicationUsers.Remove(applicationUser);
+			db.SaveChanges();
 
-        private bool ApplicationUserExists(string id)
-        {
-            return db.ApplicationUsers.Count(e => e.Id == id) > 0;
-        }
-    }
+			return Ok(applicationUser);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		private bool ApplicationUserExists(string id)
+		{
+			return db.ApplicationUsers.Count(e => e.Id == id) > 0;
+		}
+	}
 }

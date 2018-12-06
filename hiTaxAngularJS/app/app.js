@@ -33,6 +33,11 @@
 				templateUrl: "/app/components/login/loginView.html",
 				controller: "loginController"
 			})
+			.state('profile', {
+				url: "/profile",
+				templateUrl: "/app/components/profile/profileView.html",
+				controller: "profileController"
+			})
 			.state('admin', {
 				url: "/admin",
 				parent: 'base',

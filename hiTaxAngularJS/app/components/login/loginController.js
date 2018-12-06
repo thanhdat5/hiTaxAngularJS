@@ -30,8 +30,9 @@
 							notificationService.displayError("[Internal Server Error] " + response.statusText);
 						}
 						else {
-							var stateService = $injector.get('$state');
-							stateService.go('admin');
+							//var stateService = $injector.get('$state');
+							//stateService.go('admin');
+							window.location.reload();
 						}
 					}, function (error) {
 						notificationService.displayError("Username or password is invalid.");
