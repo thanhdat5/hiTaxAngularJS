@@ -12,9 +12,9 @@ using System.Web.Http;
 
 namespace hiTaxAngularJS.api
 {
-	[RoutePrefix("api/Customers")]
+	[RoutePrefix("api/Products")]
 	[Authorize]
-	public class CustomersController : ApiControllerBase
+	public class ProductsController : ApiControllerBase
 	{
 		private hiTaxAngularJSDbContext db = new hiTaxAngularJSDbContext();
 
@@ -23,17 +23,16 @@ namespace hiTaxAngularJS.api
 		{
 			return CreateHttpResponse(request, () =>
 			{
-				var result = db.Customers.Where(m => !m.IsDeleted).Select(m => new CustomerResponse
+				var result = db.Products.Where(m => !m.IsDeleted).Select(m => new ProductResponse
 				{
 					Id = m.Id,
-					CustomerName = m.CustomerName,
+					ProductName = m.ProductName,
 					CompanyId = m.CompanyId ?? 0,
 					CompanyName = m.Company != null ? m.Company.CompanyName : "",
-					CustomerTypeId = m.CustomerTypeId ?? 0,
-					CustomerTypeName = m.CustomerType != null ? m.CustomerType.Name : "",
-					Address = m.Address,
-					PhoneNumber = m.PhoneNumber
-				}).OrderBy(m => m.CompanyName).ThenBy(m => m.CustomerName).ToList();
+					Description = m.Description,
+					UnitId = m.UnitId,
+					UnitName = m.Unit != null ? m.Unit.Name : "",
+				}).OrderBy(m => m.CompanyName).ThenBy(m => m.ProductName).ToList();
 
 				HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, result);
 				return response;
@@ -41,7 +40,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Add")]
-		public HttpResponseMessage Post(HttpRequestMessage request, CustomerRequest requestParam)
+		public HttpResponseMessage Post(HttpRequestMessage request, ProductRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
 			{
@@ -54,21 +53,20 @@ namespace hiTaxAngularJS.api
 				{
 					try
 					{
-						var input = new Customer();
+						var input = new Product();
 
 						input.Id = requestParam.Id;
 						input.CompanyId = requestParam.CompanyId;
-						input.CustomerTypeId = requestParam.CustomerTypeId;
-						input.CustomerName = requestParam.CustomerName;
-						input.Address = requestParam.Address;
-						input.PhoneNumber = requestParam.PhoneNumber;
+						input.UnitId = requestParam.UnitId;
+						input.ProductName = requestParam.ProductName;
+						input.Description = requestParam.Description;
 
 						input.Created = DateTime.Now;
 						input.CreatedBy = User.Identity.GetUserId();
 						input.Modified = DateTime.Now;
 						input.ModifiedBy = User.Identity.GetUserId();
 
-						db.Customers.Add(input);
+						db.Products.Add(input);
 						db.SaveChanges();
 						response = request.CreateResponse(HttpStatusCode.Created, input);
 					}
@@ -82,7 +80,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Update")]
-		public HttpResponseMessage Put(HttpRequestMessage request, CustomerRequest requestParam)
+		public HttpResponseMessage Put(HttpRequestMessage request, ProductRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
 			{
@@ -93,15 +91,14 @@ namespace hiTaxAngularJS.api
 				}
 				else
 				{
-					var currentObject = db.Customers.Find(requestParam.Id);
+					var currentObject = db.Products.Find(requestParam.Id);
 					if (currentObject != null)
 					{
 						currentObject.Id = requestParam.Id;
 						currentObject.CompanyId = requestParam.CompanyId;
-						currentObject.CustomerTypeId = requestParam.CustomerTypeId;
-						currentObject.CustomerName = requestParam.CustomerName;
-						currentObject.Address = requestParam.Address;
-						currentObject.PhoneNumber = requestParam.PhoneNumber;
+						currentObject.UnitId = requestParam.UnitId;
+						currentObject.ProductName = requestParam.ProductName;
+						currentObject.Description = requestParam.Description;
 
 						currentObject.Modified = DateTime.Now;
 						currentObject.ModifiedBy = User.Identity.GetUserId();
@@ -129,7 +126,7 @@ namespace hiTaxAngularJS.api
 				}
 				else
 				{
-					var currentObject = db.Customers.Find(id);
+					var currentObject = db.Products.Find(id);
 					if (currentObject != null)
 					{
 						currentObject.IsDeleted = true;

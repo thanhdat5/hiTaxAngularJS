@@ -215,7 +215,9 @@
     <Compile Include="api\AccountController.cs" />
     <Compile Include="api\ApiControllerBase.cs" />
     <Compile Include="api\ApplicationUsersController.cs" />
+    <Compile Include="api\ProductsController.cs" />
     <Compile Include="api\CustomersController.cs" />
+    <Compile Include="api\TaxValuesController.cs" />
     <Compile Include="api\DepartmentsController.cs" />
     <Compile Include="api\CustomerTypesController.cs" />
     <Compile Include="api\UnitsController.cs" />
@@ -256,13 +258,17 @@
     <Compile Include="Models\InvoiceDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Request\ProductRequest.cs" />
     <Compile Include="Models\Request\CustomerRequest.cs" />
+    <Compile Include="Models\Request\TaxValueRequest.cs" />
     <Compile Include="Models\Request\DepartmentRequest.cs" />
     <Compile Include="Models\Request\CustomerTypeRequest.cs" />
     <Compile Include="Models\Request\UnitRequest.cs" />
     <Compile Include="Models\Request\CategoryRequest.cs" />
     <Compile Include="Models\Request\CompanyRequest.cs" />
     <Compile Include="Models\Response\ApplicationUserResponse.cs" />
+    <Compile Include="Models\Response\ProductResponse.cs" />
+    <Compile Include="Models\Response\TaxValueResponse.cs" />
     <Compile Include="Models\Response\CustomerResponse.cs" />
     <Compile Include="Models\Response\DepartmentResponse.cs" />
     <Compile Include="Models\Response\CustomerTypeResponse.cs" />
@@ -277,9 +283,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\components\products\productListController.js" />
+    <Content Include="app\components\products\productListView.html" />
+    <Content Include="app\components\products\products.module.js" />
     <Content Include="app\components\customers\customerListController.js" />
     <Content Include="app\components\customers\customerListView.html" />
     <Content Include="app\components\customers\customers.module.js" />
+    <Content Include="app\components\taxvalues\taxvalueListController.js" />
+    <Content Include="app\components\taxvalues\taxvalueListView.html" />
+    <Content Include="app\components\taxvalues\taxvalues.module.js" />
     <Content Include="app\components\departments\departments.module.js" />
     <Content Include="app\components\departments\departmentListController.js" />
     <Content Include="app\components\departments\departmentListView.html" />

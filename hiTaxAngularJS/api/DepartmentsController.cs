@@ -30,7 +30,7 @@ namespace hiTaxAngularJS.api
 					CompanyId = m.CompanyId,
 					CompanyName = m.Company != null ? m.Company.CompanyName : "",
 					Address = m.Address
-				}).OrderBy(m => m.DepartmentName).ToList();
+				}).OrderBy(m => m.CompanyName).ThenBy(m => m.DepartmentName).ToList();
 
 				HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, result);
 				return response;

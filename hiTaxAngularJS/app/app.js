@@ -10,6 +10,8 @@
 			'hiTax.customertypes',
 			'hiTax.departments',
 			'hiTax.customers',
+			'hiTax.taxvalues',
+			'hiTax.products',
 			'hiTax.common'
 		]
 	)
@@ -84,6 +86,18 @@
 				parent: 'base',
 				templateUrl: "/app/components/customers/customerListView.html",
 				controller: "customerListController"
+			})
+			.state('taxvalues', {
+				url: "/taxvalues",
+				parent: 'base',
+				templateUrl: "/app/components/taxvalues/taxvalueListView.html",
+				controller: "taxvalueListController"
+			})
+			.state('products', {
+				url: "/products",
+				parent: 'base',
+				templateUrl: "/app/components/products/productListView.html",
+				controller: "productListController"
 			})
 			;
 		//$urlRouterProvider.otherwise('/login');
