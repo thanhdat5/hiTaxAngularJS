@@ -7,6 +7,12 @@
 
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	<!-- Kendo UI -->
+	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.412/styles/kendo.common.min.css">
+	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.412/styles/kendo.rtl.min.css">
+	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.412/styles/kendo.default.min.css">
+	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.412/styles/kendo.mobile.all.min.css">
+
 	<!-- bootstrap & fontawesome -->
 	<link href="Content/Template/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 	<link href="Content/Template/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -35,14 +41,25 @@
 			<![endif]-->
 	<link href="Content/Template/libs/toastr/toastr.min.css" rel="stylesheet" />
 	<link href="Content/Template/libs/angular-loading-bar/build/loading-bar.min.css" rel="stylesheet" />
+	<link href="Content/custom-style.css" rel="stylesheet" />
+
+	<!-- AngularJS and KendoUI -->
+	<script src="Content/Template/ace-master/assets/js/jquery.min.js"></script>
+	<script src="Content/Template/libs/angular/angular.js"></script>
+	<script src="http://kendo.cdn.telerik.com/2016.1.412/js/jszip.min.js"></script>
+	<script src="http://kendo.cdn.telerik.com/2016.1.412/js/kendo.all.min.js"></script>
+	<script src="Content/Template/libs/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="Content/Template/libs/angular-local-storage/dist/angular-local-storage.js"></script>
+	<script src="Content/Template/libs/bootbox/bootbox.js"></script>
+	<script src="Content/Template/libs/ngBootbox/dist/ngBootbox.min.js"></script>
+
 </head>
 
 <body class="no-skin" ng-app="hiTax">
+	<div class="loading-spiner-holder loading">Loading&#8230;</div>
 	<div ui-view></div>
 
 	<!-- basic scripts -->
-	<script src="/Content/Template/libs/jquery/dist/jquery.min.js"></script>
-
 	<!-- <![endif]-->
 	<!--[if IE]>
 	<script src="/Content/Template/ace-master/assets/js/jquery.1.11.1.min.js"></script>
@@ -69,11 +86,9 @@
 	<script src="/Content/Template/ace-master/assets/js/ace.min.js"></script>
 	<script src="Content/Template/libs/lodash/dist/lodash.min.js"></script>
 	<!-- inline scripts related to this page -->
-	<script src="Content/Template/libs/angular/angular.js"></script>
-	<script src="Content/Template/libs/angular-ui-router/release/angular-ui-router.js"></script>
-	<script src="Content/Template/libs/angular-local-storage/dist/angular-local-storage.js"></script>
 	<script src="Content/Template/libs/toastr/toastr.min.js"></script>
 	<script src="Content/Template/libs/angular-loading-bar/build/loading-bar.min.js"></script>
+
 	<script src="app/app.js"></script>
 	<script src="app/shared/modules/hiTax.common.js"></script>
 
@@ -84,10 +99,22 @@
 	<script src="app/shared/services/loginService.js"></script>
 	<script src="app/shared/services/notificationService.js"></script>
 
+	<script src="app/components/configs/configsController.js"></script>
 	<script src="app/components/users/users.module.js"></script>
 	<script src="app/components/users/userListController.js"></script>
-	<script src="app/components/users/userEditController.js"></script>
-	<script src="app/components/users/userAddController.js"></script>
+	<script src="app/components/companies/companies.module.js"></script>
+	<script src="app/components/companies/companyListController.js"></script>
+	<script src="app/components/categories/categories.module.js"></script>
+	<script src="app/components/categories/categoryListController.js"></script>
+	<script src="app/components/units/units.module.js"></script>
+	<script src="app/components/units/unitListController.js"></script>
+	<script src="app/components/customertypes/customertypes.module.js"></script>
+	<script src="app/components/customertypes/customertypeListController.js"></script>
+	<script src="app/components/departments/departments.module.js"></script>
+	<script src="app/components/departments/departmentListController.js"></script>
+	<script src="app/components/customers/customers.module.js"></script>
+	<script src="app/components/customers/customerListController.js"></script>
+
 	<script src="app/components/home/homeController.js"></script>
 	<script src="app/components/login/loginController.js"></script>
 	<script src="app/components/home/rootController.js"></script>

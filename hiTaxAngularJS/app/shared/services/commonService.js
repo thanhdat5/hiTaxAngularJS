@@ -6,9 +6,16 @@
     function commonService() {
         return {
             getSeoTitle: getSeoTitle,
-            getTree:getTree
+			getTree: getTree,
+			showLoading: showLoading,
+			hideLoading: hideLoading
         }
-
+		function showLoading() {
+			$('.loading-spiner-holder').show();
+		}
+		function hideLoading() {
+			$('.loading-spiner-holder').show();
+		}
         function getSeoTitle(input) {
             if (input == undefined || input == '')
                 return '';
@@ -77,6 +84,6 @@
             };
 
             return tree;
-        }
+		}
     }
 })(angular.module('hiTax.common'));

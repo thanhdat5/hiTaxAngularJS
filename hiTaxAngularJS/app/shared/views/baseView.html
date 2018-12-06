@@ -24,18 +24,19 @@
 			<ul class="nav ace-nav">
 				<li class="light-blue">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-						<img class="nav-user-photo" width="35" height="35" style="max-height:40px" src="xxx" />
+						<!--<img class="nav-user-photo" width="35" height="35" style="max-height:40px" ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/Content/images/NoImage.gif'}}" alt="{{item.levelName}}" err-src='/Content/images/NoImage.gif' onerror="this.src ='/assets/images/NoAvatar.jpg'" />-->
+						<img class="nav-user-photo" width="35" height="35" style="max-height:40px" ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/Content/images/NoImage.gif'}}" alt="{{item.levelName}}" err-src='/Content/images/NoImage.gif' onerror="this.src ='/Content/images/NoImage.gif'" />
 						<span class="user-info">
 							<small>Welcome,</small>
-							<span id="x-logged-username"></span>
+							<span id="x-logged-username">xxx</span>
 						</span>
 						<i class="ace-icon fa fa-caret-down"></i>
 					</a>
 					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 						<li>
-							<a  ui-sref="settings">
+							<a  ui-sref="configs">
 								<i class="ace-icon fa fa-cog"></i>
-								Settings
+								Configs
 							</a>
 						</li>
 						<li>
@@ -76,16 +77,13 @@
 						<i class="ace-icon fa fa-home home-icon"></i>
 						<a ui-sref="admin">Home</a>
 					</li>
-					<li class="active x-page-title">Page Title</li>
+					<li class="active x-page-title">{{pageTitle}}</li>
 				</ul><!-- /.breadcrumb -->
 			</div>
 
 			<div class="page-content">
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="page-header">
-							<h1 class="x-page-title">Page Title</h1>
-						</div>
 						<!-- PAGE CONTENT BEGINS -->
 						<div ui-view></div>
 						<!-- PAGE CONTENT ENDS -->

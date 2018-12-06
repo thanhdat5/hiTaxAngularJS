@@ -1,17 +1,17 @@
 ﻿/// <reference path="../../../content/template/libs/angular/angular.js" />
 
 (function () {
-	angular.module('hiTax.users', ['hiTax.common']).config(config);
+	angular.module('hiTax.categories', ['hiTax.common']).config(config);
 
 	config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 	function config($stateProvider, $urlRouterProvider) {
 		$stateProvider
-			.state('users', {
-				url: "/users",
+			.state('categories', {
+				url: "/categories",
 				parent: 'base',
-				templateUrl: "/app/components/users/userListView.html",
-				controller: "userListController"
+				templateUrl: "/app/components/categories/categoryListView.html",
+				controller: "categoryListController"
 			});
 	}
 })();

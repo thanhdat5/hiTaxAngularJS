@@ -1,22 +1,9 @@
 ﻿(function (app) {
-	app.controller("userListController", userListController);
-	userListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService'];
-	function userListController($scope, $rootScope, apiService, $ngBootbox, notificationService) {
+	app.controller("companyListController", companyListController);
+	companyListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService', 'authData'];
+	function companyListController($scope, $rootScope, apiService, $ngBootbox, notificationService, authData) {
 		// Set page title
-		$rootScope.pageTitle = "User Management";
-
-		// Declare variable
-		$scope.allCompany = [];
-
-		// Set data dropdownlist
-		function loadMasterData() {
-			apiService.get('/api/Companies/GetAll', null, function (response) {
-				$scope.allCompany = response.data || [];
-			}, function () {
-				$scope.allCompany = [];
-			});
-		}
-		loadMasterData();
+		$rootScope.pageTitle = "Company Management";
 
 		// Set data gridview
 		$scope.mainGridOptions = {
@@ -25,13 +12,16 @@
 				transport: {
 					read:
 						{
-							url: "api/ApplicationUsers",
+							url: "api/Companies/GetAll",
+							beforeSend: function (req) {
+								req.setRequestHeader('Authorization', 'Bearer ' + authData.authenticationData.accessToken);
+							},
 							dataType: "json",
 						}
 				},
 				pageSize: 5,
-				serverPaging: true,
-				serverSorting: true
+				serverPaging: false,
+				serverSorting: false
 			},
 			sortable: true,
 			pageable: true,
@@ -41,22 +31,14 @@
 					field: "Id",
 					title: "ID",
 					hidden: true
-				}, {
-					field: "ImagePath",
-					title: "Image",
-					template: function (dataItem) {
-						return "<img style='height:40px; width:40px;' ng-src='" + (dataItem.ImagePath != null && dataItem.ImagePath != "" ? dataItem.ImagePath : "/Content/images/NoImage.gif") + "' alt='" + dataItem.UserName + "' err-src='/Content/images/NoImage.gif' />";
-					},
-					width: "60px"
-				}, {
-					field: "UserName",
-					title: "UserName"
-				}, {
-					field: "DisplayName",
-					title: "Display Name"
-				}, {
-					field: "CompanyId",
-					title: "Company"
+				},
+				{
+					field: "CompanyName",
+					title: "Company Name"
+				},
+				{
+					field: "Description",
+					title: "Description"
 				},
 				{
 					title: "Action",
@@ -71,6 +53,7 @@
 		// Action
 		$scope.popupModel = {};
 		$scope.popupTitle = "";
+
 		$scope.addItem = function () {
 			$scope.popupTitle = "Add new item";
 			showModal();
@@ -83,10 +66,34 @@
 		}
 
 		$scope.saveItem = function () {
-			if ($scope.popupModel.Id) {
-				alert("Edit");
-			} else {
-				alert("Add");
+			var validator = $("#main-form").kendoValidator().data("kendoValidator");
+			if (validator.validate()) {
+				if ($scope.popupModel.Id) {
+					apiService.put('/api/Companies/Update', $scope.popupModel,
+						function (success) {
+							notificationService.displaySuccess('The record was saved successfully.');
+							reloadGrid();
+							$scope.closeModal();
+						},
+						function (error) {
+							notificationService.displayError(error.data.Message);
+							notificationService.displayErrorValidation(error);
+						}
+					);
+				} else {
+					$scope.popupModel.Id = 0;
+					apiService.post('/api/Companies/Add', $scope.popupModel,
+						function (success) {
+							notificationService.displaySuccess('The record was added successfully.');
+							reloadGrid();
+							$scope.closeModal();
+						},
+						function (error) {
+							notificationService.displayError(error.data.Message);
+							notificationService.displayErrorValidation(error);
+						}
+					);
+				}
 			}
 		}
 
@@ -98,7 +105,7 @@
 							id: dataItem.Id
 						}
 					}
-					apiService.del('/api/ApplicationUsers/delete', config,
+					apiService.del('/api/Companies/delete', config,
 						function (response) {
 							notificationService.displaySuccess('The record was removed successfully.');
 							reloadGrid();
@@ -125,4 +132,4 @@
 			$('#main-grid').data('kendoGrid').dataSource.read();
 		}
 	}
-})(angular.module('hiTax.users', []));
+})(angular.module('hiTax.companies', ["kendo.directives"]));

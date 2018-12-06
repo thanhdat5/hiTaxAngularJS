@@ -213,7 +213,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\AccountController.cs" />
+    <Compile Include="api\ApiControllerBase.cs" />
     <Compile Include="api\ApplicationUsersController.cs" />
+    <Compile Include="api\CustomersController.cs" />
+    <Compile Include="api\DepartmentsController.cs" />
+    <Compile Include="api\CustomerTypesController.cs" />
+    <Compile Include="api\UnitsController.cs" />
+    <Compile Include="api\CategoriesController.cs" />
+    <Compile Include="api\CompaniesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -249,7 +256,20 @@
     <Compile Include="Models\InvoiceDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Request\CustomerRequest.cs" />
+    <Compile Include="Models\Request\DepartmentRequest.cs" />
+    <Compile Include="Models\Request\CustomerTypeRequest.cs" />
+    <Compile Include="Models\Request\UnitRequest.cs" />
+    <Compile Include="Models\Request\CategoryRequest.cs" />
+    <Compile Include="Models\Request\CompanyRequest.cs" />
     <Compile Include="Models\Response\ApplicationUserResponse.cs" />
+    <Compile Include="Models\Response\CustomerResponse.cs" />
+    <Compile Include="Models\Response\DepartmentResponse.cs" />
+    <Compile Include="Models\Response\CustomerTypeResponse.cs" />
+    <Compile Include="Models\Response\UnitResponse.cs" />
+    <Compile Include="Models\Response\CategoryResponse.cs" />
+    <Compile Include="Models\Response\CompanyResponse.cs" />
+    <Compile Include="Models\Response\DropdownListResponse.cs" />
     <Compile Include="Models\TaxValue.cs" />
     <Compile Include="Models\Unit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -257,15 +277,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\components\customers\customerListController.js" />
+    <Content Include="app\components\customers\customerListView.html" />
+    <Content Include="app\components\customers\customers.module.js" />
+    <Content Include="app\components\departments\departments.module.js" />
+    <Content Include="app\components\departments\departmentListController.js" />
+    <Content Include="app\components\departments\departmentListView.html" />
+    <Content Include="app\components\customertypes\customertypes.module.js" />
+    <Content Include="app\components\customertypes\customertypeListController.js" />
+    <Content Include="app\components\customertypes\customertypeListView.html" />
+    <Content Include="app\components\units\units.module.js" />
+    <Content Include="app\components\units\unitListController.js" />
+    <Content Include="app\components\units\unitListView.html" />
+    <Content Include="app\components\categories\categories.module.js" />
+    <Content Include="app\components\categories\categoryListController.js" />
+    <Content Include="app\components\categories\categoryListView.html" />
+    <Content Include="app\components\companies\companyListController.js" />
+    <Content Include="app\components\companies\companyListView.html" />
+    <Content Include="app\components\companies\companies.module.js" />
+    <Content Include="app\components\configs\configsController.js" />
+    <Content Include="app\components\configs\configsView.html" />
     <Content Include="app\components\home\homeController.js" />
     <Content Include="app\components\home\homeView.html" />
     <Content Include="app\components\home\rootController.js" />
     <Content Include="app\components\login\loginController.js" />
     <Content Include="app\components\login\loginView.html" />
-    <Content Include="app\components\users\userEditController.js" />
-    <Content Include="app\components\users\userAddController.js" />
-    <Content Include="app\components\users\userEditView.html" />
-    <Content Include="app\components\users\userAddView.html" />
     <Content Include="app\components\users\users.module.js" />
     <Content Include="app\components\users\userListController.js" />
     <Content Include="app\components\users\userListView.html" />
@@ -282,12 +318,8 @@
     <Content Include="app\shared\services\notificationService.js" />
     <Content Include="app\shared\views\baseView.html" />
     <Content Include="app\shared\views\sideBar.html" />
-    <Content Include="Content\Images\banner.png" />
-    <Content Include="Content\Images\circle.png" />
-    <Content Include="Content\Images\EW054.png" />
-    <Content Include="Content\Images\logo-login.png" />
-    <Content Include="Content\Images\success-img.png" />
-    <Content Include="Content\Images\user-logged-bg.png" />
+    <Content Include="Content\custom-style.css" />
+    <Content Include="Content\images\NoImage.gif" />
     <Content Include="Content\Template\ace-master\assets\avatars\avatar.png" />
     <Content Include="Content\Template\ace-master\assets\avatars\avatar1.png" />
     <Content Include="Content\Template\ace-master\assets\avatars\avatar2.png" />
@@ -5079,10 +5111,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\components\categories\" />
-    <Folder Include="app\components\companies\" />
-    <Folder Include="app\shared\footer\" />
-    <Folder Include="app\shared\navigation\" />
     <Folder Include="Content\Template\libs\checklist-model\test\" />
   </ItemGroup>
   <ItemGroup>

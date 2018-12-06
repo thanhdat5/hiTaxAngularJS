@@ -1,17 +1,17 @@
 ﻿/// <reference path="../../../content/template/libs/angular/angular.js" />
 
 (function () {
-	angular.module('hiTax.users', ['hiTax.common']).config(config);
+	angular.module('hiTax.units', ['hiTax.common']).config(config);
 
 	config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 	function config($stateProvider, $urlRouterProvider) {
 		$stateProvider
-			.state('users', {
-				url: "/users",
+			.state('units', {
+				url: "/units",
 				parent: 'base',
-				templateUrl: "/app/components/users/userListView.html",
-				controller: "userListController"
+				templateUrl: "/app/components/units/unitListView.html",
+				controller: "unitListController"
 			});
 	}
 })();
