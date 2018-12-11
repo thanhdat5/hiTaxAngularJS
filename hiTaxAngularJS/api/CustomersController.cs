@@ -1,4 +1,5 @@
 ﻿using hiTax.Web;
+using hiTaxAngularJS.Common;
 using hiTaxAngularJS.Models;
 using hiTaxAngularJS.Models.Request;
 using hiTaxAngularJS.Models.Response;
@@ -17,12 +18,14 @@ namespace hiTaxAngularJS.api
 	public class CustomersController : ApiControllerBase
 	{
 		private hiTaxAngularJSDbContext db = new hiTaxAngularJSDbContext();
+		private PermissionHelper permissionHelper = new PermissionHelper();
 
 		[Route("GetAll")]
 		public HttpResponseMessage Get(HttpRequestMessage request)
 		{
 			return CreateHttpResponse(request, () =>
 			{
+				var currentUserInfo = permissionHelper.GetUserInfo();
 				var result = db.Customers.Where(m => !m.IsDeleted).Select(m => new CustomerResponse
 				{
 					Id = m.Id,
@@ -33,7 +36,11 @@ namespace hiTaxAngularJS.api
 					CustomerTypeName = m.CustomerType != null ? m.CustomerType.Name : "",
 					Address = m.Address,
 					PhoneNumber = m.PhoneNumber
-				}).OrderBy(m => m.CompanyName).ThenBy(m => m.CustomerName).ToList();
+				})
+				.Where(m => currentUserInfo.IsSPAdmin || (!currentUserInfo.IsSPAdmin && m.CompanyId == currentUserInfo.CompanyId))
+				.OrderBy(m => m.CompanyName)
+				.ThenBy(m => m.CustomerName)
+				.ToList();
 
 				HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, result);
 				return response;
@@ -41,6 +48,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Add")]
+		[Authorize(Roles = "SPAdmin,Director")]
 		public HttpResponseMessage Post(HttpRequestMessage request, CustomerRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
@@ -82,6 +90,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Update")]
+		[Authorize(Roles = "SPAdmin,Director")]
 		public HttpResponseMessage Put(HttpRequestMessage request, CustomerRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
@@ -118,6 +127,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Delete")]
+		[Authorize(Roles = "SPAdmin,Director")]
 		public HttpResponseMessage Delete(HttpRequestMessage request, int id)
 		{
 			return CreateHttpResponse(request, () =>

@@ -1,0 +1,92 @@
+﻿<h3>
+	Monthly report
+	<a class="btn btn-primary btn-sm pull-right" ui-sref="account_report" href="javascript:void(0)"><span class="fa fa-pie-chart"></span> Accounting report</a>
+</h3>
+<hr />
+<div class="row">
+	<div class="col-sm-5">
+		<div class="widget-box widget-color-orange ui-sortable-handle">
+			<div class="widget-header widget-header-small">
+				<h6 class="widget-title">
+					<i class="ace-icon fa fa-sort"></i>
+					<span>Select date created</span>
+				</h6>
+
+				<div class="widget-toolbar">
+					<a href="javascript:void(0)" data-action="collapse">
+						<i class="ace-icon fa fa-minus" data-icon-show="fa-plus" data-icon-hide="fa-minus"></i>
+					</a>
+				</div>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="input-group">
+								<span class="input-group-addon">
+									Select month:
+								</span>
+								<input ng-model="month" kendo-date-picker k-options="monthSelectorOptions" k-format="'MMMM yyyy'" />
+							</div>
+						</div>
+						<div class=""><div style="clear: both; width: 100%; height: 10px;"></div></div>
+						<div class="col-xs-12">
+							<button type="button" id="btnSearch" name="btnSearch" ng-click="search()" class="btn btn-success btn-xs">Search</button>&nbsp;
+							<button type="button" id="btnReset" name="btnReset" ng-click="clearAll()" class="btn btn-default btn-xs">Clear All</button>&nbsp;
+							<button type="button" id="btnPrint" name="btnPrint" class="btn btn-default btn-xs" onclick="window.print();return false">Print</button>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="table-reponsive" style="overflow: auto;" ng-show="isSearch">
+						<br>
+						<table class="table table-bordered">
+							<tbody id="report-content">
+								<tr>
+									<th style="width:120px">Thuế đầu ra</th>
+									<td>{{result.TotalOut | number}}.00 € (Total)</td>
+								</tr>
+								<tr>
+									<th>Thuế đầu vào</th>
+									<td>{{result.TotalIn | number}}.00 € (Total)</td>
+								</tr>
+								<tr>
+									<th>Thanh toán</th>
+									<td>{{(result.TotalOut - result.TotalIn) | number}}.00 €</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="hidden-lg hidden-md hidden-sm"><div style="clear: both; width: 100%; height: 15px;"></div></div>
+	<div class="col-sm-7">
+		<div class="widget-box ui-sortable-handle widget-color-blue">
+			<div class="widget-header widget-header-small">
+				<h6 class="widget-title">
+					<i class="ace-icon fa fa-sort"></i>
+					<span>Report generate (chart)</span>
+				</h6>
+
+				<div class="widget-toolbar">
+					<a href="javascript:void(0)" data-action="collapse">
+						<i class="ace-icon fa fa-minus" data-icon-show="fa-plus" data-icon-hide="fa-minus"></i>
+					</a>
+				</div>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row" ng-show="isSearch">
+						<div class="col-xs-12">
+							<div class="chart-content" id="myChart">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -21,9 +21,9 @@ namespace hiTaxAngularJS.Models
 
         public int TaxValueId { get; set; }
 
-        public int ProductId { get; set; }
+        public Nullable<int> ProductId { get; set; }
 
-        public int UnitId { get; set; }
+        public Nullable<int> UnitId { get; set; }
 
         public DateTime Created { get; set; }
 

@@ -215,6 +215,8 @@
     <Compile Include="api\AccountController.cs" />
     <Compile Include="api\ApiControllerBase.cs" />
     <Compile Include="api\ApplicationUsersController.cs" />
+    <Compile Include="api\InvoiceAccountsController.cs" />
+    <Compile Include="api\InvoicesController.cs" />
     <Compile Include="api\ProductsController.cs" />
     <Compile Include="api\CustomersController.cs" />
     <Compile Include="api\TaxValuesController.cs" />
@@ -230,9 +232,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\PermissionHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -252,12 +254,53 @@
     <Compile Include="Migrations\201812060425144_UpdateSomething3.Designer.cs">
       <DependentUpon>201812060425144_UpdateSomething3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812061916577_UpdateSomething4.cs" />
+    <Compile Include="Migrations\201812061916577_UpdateSomething4.Designer.cs">
+      <DependentUpon>201812061916577_UpdateSomething4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812091825201_UpdateInvoiceDetail.cs" />
+    <Compile Include="Migrations\201812091825201_UpdateInvoiceDetail.Designer.cs">
+      <DependentUpon>201812091825201_UpdateInvoiceDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812091827359_UpdateInvoiceDetail2.cs" />
+    <Compile Include="Migrations\201812091827359_UpdateInvoiceDetail2.Designer.cs">
+      <DependentUpon>201812091827359_UpdateInvoiceDetail2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812091916472_UpdateInvoiceDetailMaxLength.cs" />
+    <Compile Include="Migrations\201812091916472_UpdateInvoiceDetailMaxLength.Designer.cs">
+      <DependentUpon>201812091916472_UpdateInvoiceDetailMaxLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812111527326_AddSomeField.cs" />
+    <Compile Include="Migrations\201812111527326_AddSomeField.Designer.cs">
+      <DependentUpon>201812111527326_AddSomeField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812111545306_AddTableAccount.cs" />
+    <Compile Include="Migrations\201812111545306_AddTableAccount.Designer.cs">
+      <DependentUpon>201812111545306_AddTableAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812111600050_AddTableAccount2.cs" />
+    <Compile Include="Migrations\201812111600050_AddTableAccount2.Designer.cs">
+      <DependentUpon>201812111600050_AddTableAccount2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812111603030_AddTableAccount3.cs" />
+    <Compile Include="Migrations\201812111603030_AddTableAccount3.Designer.cs">
+      <DependentUpon>201812111603030_AddTableAccount3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812111607564_AddTableAccount4.cs" />
+    <Compile Include="Migrations\201812111607564_AddTableAccount4.Designer.cs">
+      <DependentUpon>201812111607564_AddTableAccount4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812111814146_AddTableAccount5.cs" />
+    <Compile Include="Migrations\201812111814146_AddTableAccount5.Designer.cs">
+      <DependentUpon>201812111814146_AddTableAccount5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerType.cs" />
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\hiTaxAngularJSDbContext.cs" />
@@ -266,6 +309,10 @@
     <Compile Include="Models\InvoiceDetail.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Request\ApplicationUserRequest.cs" />
+    <Compile Include="Models\Request\InvoiceAccountRequest.cs" />
+    <Compile Include="Models\Request\InvoiceInputRequest.cs" />
+    <Compile Include="Models\Request\InvoiceRequest.cs" />
     <Compile Include="Models\Request\ProductRequest.cs" />
     <Compile Include="Models\Request\CustomerRequest.cs" />
     <Compile Include="Models\Request\TaxValueRequest.cs" />
@@ -275,6 +322,9 @@
     <Compile Include="Models\Request\CategoryRequest.cs" />
     <Compile Include="Models\Request\CompanyRequest.cs" />
     <Compile Include="Models\Response\ApplicationUserResponse.cs" />
+    <Compile Include="Models\Response\InvoiceAccountResponse.cs" />
+    <Compile Include="Models\Response\InvoiceDetailResponse.cs" />
+    <Compile Include="Models\Response\InvoiceResponse.cs" />
     <Compile Include="Models\Response\ProductResponse.cs" />
     <Compile Include="Models\Response\TaxValueResponse.cs" />
     <Compile Include="Models\Response\CustomerResponse.cs" />
@@ -291,6 +341,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\components\accounts\accounts.module.js" />
+    <Content Include="app\components\accounts\accountListController.js" />
+    <Content Include="app\components\accounts\accountListView.html" />
+    <Content Include="app\components\invoiceInput\invoiceInput.module.js" />
+    <Content Include="app\components\invoiceInput\invoiceInputController.js" />
+    <Content Include="app\components\invoiceInput\invoiceInputView.html" />
+    <Content Include="app\components\invoices\invoiceListController.js" />
+    <Content Include="app\components\invoices\invoiceListView.html" />
+    <Content Include="app\components\invoices\invoices.module.js" />
+    <Content Include="app\components\profile\profile.module.js" />
     <Content Include="app\components\profile\profileController.js" />
     <Content Include="app\components\profile\profileView.html" />
     <Content Include="app\components\products\productListController.js" />
@@ -299,6 +359,10 @@
     <Content Include="app\components\customers\customerListController.js" />
     <Content Include="app\components\customers\customerListView.html" />
     <Content Include="app\components\customers\customers.module.js" />
+    <Content Include="app\components\reports\monthly_reportController.js" />
+    <Content Include="app\components\reports\account_reportController.js" />
+    <Content Include="app\components\reports\monthly_reportView.html" />
+    <Content Include="app\components\reports\account_reportView.html" />
     <Content Include="app\components\taxvalues\taxvalueListController.js" />
     <Content Include="app\components\taxvalues\taxvalueListView.html" />
     <Content Include="app\components\taxvalues\taxvalues.module.js" />
@@ -339,7 +403,6 @@
     <Content Include="app\shared\services\loginService.js" />
     <Content Include="app\shared\services\notificationService.js" />
     <Content Include="app\shared\views\baseView.html" />
-    <Content Include="app\shared\views\sideBar.html" />
     <Content Include="Content\custom-style.css" />
     <Content Include="Content\images\NoImage.gif" />
     <Content Include="Content\Template\ace-master\assets\avatars\avatar.png" />
@@ -4084,102 +4147,6 @@
     <Content Include="Content\Template\libs\jquery\external\sizzle\dist\sizzle.min.js" />
     <Content Include="Content\Template\libs\jquery\external\sizzle\LICENSE.txt" />
     <Content Include="Content\Template\libs\jquery\LICENSE.txt" />
-    <Content Include="Content\Template\libs\jquery\src\ajax.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\jsonp.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\load.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\parseJSON.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\parseXML.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\script.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\var\location.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\var\nonce.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\var\rquery.js" />
-    <Content Include="Content\Template\libs\jquery\src\ajax\xhr.js" />
-    <Content Include="Content\Template\libs\jquery\src\attributes.js" />
-    <Content Include="Content\Template\libs\jquery\src\attributes\attr.js" />
-    <Content Include="Content\Template\libs\jquery\src\attributes\classes.js" />
-    <Content Include="Content\Template\libs\jquery\src\attributes\prop.js" />
-    <Content Include="Content\Template\libs\jquery\src\attributes\support.js" />
-    <Content Include="Content\Template\libs\jquery\src\attributes\val.js" />
-    <Content Include="Content\Template\libs\jquery\src\callbacks.js" />
-    <Content Include="Content\Template\libs\jquery\src\core.js" />
-    <Content Include="Content\Template\libs\jquery\src\core\access.js" />
-    <Content Include="Content\Template\libs\jquery\src\core\init.js" />
-    <Content Include="Content\Template\libs\jquery\src\core\parseHTML.js" />
-    <Content Include="Content\Template\libs\jquery\src\core\ready.js" />
-    <Content Include="Content\Template\libs\jquery\src\core\var\rsingleTag.js" />
-    <Content Include="Content\Template\libs\jquery\src\css.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\addGetHookIf.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\adjustCSS.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\curCSS.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\defaultDisplay.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\hiddenVisibleSelectors.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\showHide.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\support.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\var\cssExpand.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\var\getStyles.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\var\isHidden.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\var\rmargin.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\var\rnumnonpx.js" />
-    <Content Include="Content\Template\libs\jquery\src\css\var\swap.js" />
-    <Content Include="Content\Template\libs\jquery\src\data.js" />
-    <Content Include="Content\Template\libs\jquery\src\data\Data.js" />
-    <Content Include="Content\Template\libs\jquery\src\data\var\acceptData.js" />
-    <Content Include="Content\Template\libs\jquery\src\data\var\dataPriv.js" />
-    <Content Include="Content\Template\libs\jquery\src\data\var\dataUser.js" />
-    <Content Include="Content\Template\libs\jquery\src\deferred.js" />
-    <Content Include="Content\Template\libs\jquery\src\deprecated.js" />
-    <Content Include="Content\Template\libs\jquery\src\dimensions.js" />
-    <Content Include="Content\Template\libs\jquery\src\effects.js" />
-    <Content Include="Content\Template\libs\jquery\src\effects\animatedSelector.js" />
-    <Content Include="Content\Template\libs\jquery\src\effects\Tween.js" />
-    <Content Include="Content\Template\libs\jquery\src\event.js" />
-    <Content Include="Content\Template\libs\jquery\src\event\ajax.js" />
-    <Content Include="Content\Template\libs\jquery\src\event\alias.js" />
-    <Content Include="Content\Template\libs\jquery\src\event\focusin.js" />
-    <Content Include="Content\Template\libs\jquery\src\event\support.js" />
-    <Content Include="Content\Template\libs\jquery\src\event\trigger.js" />
-    <Content Include="Content\Template\libs\jquery\src\exports\amd.js" />
-    <Content Include="Content\Template\libs\jquery\src\exports\global.js" />
-    <Content Include="Content\Template\libs\jquery\src\intro.js" />
-    <Content Include="Content\Template\libs\jquery\src\jquery.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\buildFragment.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\getAll.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\setGlobalEval.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\support.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\var\rcheckableType.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\var\rscriptType.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\var\rtagName.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\wrapMap.js" />
-    <Content Include="Content\Template\libs\jquery\src\manipulation\_evalUrl.js" />
-    <Content Include="Content\Template\libs\jquery\src\offset.js" />
-    <Content Include="Content\Template\libs\jquery\src\outro.js" />
-    <Content Include="Content\Template\libs\jquery\src\queue.js" />
-    <Content Include="Content\Template\libs\jquery\src\queue\delay.js" />
-    <Content Include="Content\Template\libs\jquery\src\selector-native.js" />
-    <Content Include="Content\Template\libs\jquery\src\selector-sizzle.js" />
-    <Content Include="Content\Template\libs\jquery\src\selector.js" />
-    <Content Include="Content\Template\libs\jquery\src\serialize.js" />
-    <Content Include="Content\Template\libs\jquery\src\traversing.js" />
-    <Content Include="Content\Template\libs\jquery\src\traversing\findFilter.js" />
-    <Content Include="Content\Template\libs\jquery\src\traversing\var\dir.js" />
-    <Content Include="Content\Template\libs\jquery\src\traversing\var\rneedsContext.js" />
-    <Content Include="Content\Template\libs\jquery\src\traversing\var\siblings.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\arr.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\class2type.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\concat.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\document.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\documentElement.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\hasOwn.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\indexOf.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\pnum.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\push.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\rcssNum.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\rnotwhite.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\slice.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\support.js" />
-    <Content Include="Content\Template\libs\jquery\src\var\toString.js" />
-    <Content Include="Content\Template\libs\jquery\src\wrap.js" />
     <Content Include="Content\Template\libs\lodash\.markdown-doctest-setup.js" />
     <Content Include="Content\Template\libs\lodash\dist\lodash.core.js" />
     <Content Include="Content\Template\libs\lodash\dist\lodash.core.min.js" />
@@ -4692,7 +4659,6 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -4946,7 +4912,6 @@
     <Content Include="Content\Template\libs\jquery\dist\jquery.min.map" />
     <Content Include="Content\Template\libs\jquery\external\sizzle\dist\sizzle.min.map" />
     <Content Include="Content\Template\libs\jquery\README.md" />
-    <Content Include="Content\Template\libs\jquery\src\.jshintrc" />
     <Content Include="Content\Template\libs\mustache\.bower.json" />
     <Content Include="Content\Template\libs\mustache\bin\mustache" />
     <Content Include="Content\Template\libs\mustache\bower.json" />
@@ -5086,6 +5051,7 @@
     <Content Include="Content\Template\libs\lodash\vendor\backbone\LICENSE" />
     <Content Include="Content\Template\libs\lodash\vendor\underscore\LICENSE" />
     <Content Include="Content\Template\libs\lodash\yarn.lock" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -5108,8 +5074,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -5123,12 +5087,6 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
@@ -5156,6 +5114,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812060425144_UpdateSomething3.resx">
       <DependentUpon>201812060425144_UpdateSomething3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061916577_UpdateSomething4.resx">
+      <DependentUpon>201812061916577_UpdateSomething4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812091825201_UpdateInvoiceDetail.resx">
+      <DependentUpon>201812091825201_UpdateInvoiceDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812091827359_UpdateInvoiceDetail2.resx">
+      <DependentUpon>201812091827359_UpdateInvoiceDetail2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812091916472_UpdateInvoiceDetailMaxLength.resx">
+      <DependentUpon>201812091916472_UpdateInvoiceDetailMaxLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812111527326_AddSomeField.resx">
+      <DependentUpon>201812111527326_AddSomeField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812111545306_AddTableAccount.resx">
+      <DependentUpon>201812111545306_AddTableAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812111600050_AddTableAccount2.resx">
+      <DependentUpon>201812111600050_AddTableAccount2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812111603030_AddTableAccount3.resx">
+      <DependentUpon>201812111603030_AddTableAccount3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812111607564_AddTableAccount4.resx">
+      <DependentUpon>201812111607564_AddTableAccount4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812111814146_AddTableAccount5.resx">
+      <DependentUpon>201812111814146_AddTableAccount5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

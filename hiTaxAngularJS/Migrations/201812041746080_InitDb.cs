@@ -195,7 +195,7 @@ namespace hiTaxAngularJS.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Code = c.String(maxLength: 10),
+                        Code = c.String(maxLength: 50),
                         CreatedDate = c.DateTime(nullable: false),
                         Value = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CompanyId = c.Int(),

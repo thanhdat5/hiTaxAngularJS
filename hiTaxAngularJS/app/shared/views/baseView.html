@@ -23,7 +23,7 @@
 		<div class="navbar-buttons navbar-header pull-right" role="navigation">
 			<ul class="nav ace-nav">
 				<li class="light-blue">
-					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+					<a data-toggle="dropdown" href="javascript:void(0)" class="dropdown-toggle">
 						<!--<img class="nav-user-photo" width="35" height="35" style="max-height:40px" ng-src="{{item.badgeImageUrl != null && item.badgeImageUrl !='' ? item.badgeImageUrl : '/Content/images/NoImage.gif'}}" alt="{{item.levelName}}" err-src='/Content/images/NoImage.gif' onerror="this.src ='/assets/images/NoAvatar.jpg'" />-->
 						<img class="nav-user-photo" width="35" height="35" style="max-height:40px" ng-src="{{authentication.UserInfo.ImagePath != null && authentication.UserInfo.ImagePath !='' ? authentication.UserInfo.ImagePath : '/Content/images/NoImage.gif'}}" alt="{{authentication.UserInfo.DisplayName}}" err-src='/Content/images/NoImage.gif' onerror="this.src ='/Content/images/NoImage.gif'" />
 						<span class="user-info">
@@ -33,8 +33,8 @@
 						<i class="ace-icon fa fa-caret-down"></i>
 					</a>
 					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-						<li>
-							<a  ui-sref="configs">
+						<li ng-if="isSPAdmin || isDirector">
+							<a ui-sref="configs">
 								<i class="ace-icon fa fa-cog"></i>
 								Configs
 							</a>
@@ -58,12 +58,156 @@
 		</div>
 	</div><!-- /.navbar-container -->
 </div>
+
 <div class="main-container" id="main-container">
 	<script type="text/javascript">
 		try { ace.settings.check('main-container', 'fixed') } catch (e) { }
 	</script>
 
-	<div id="sidebar" class="sidebar responsive" ng-include="sideBar"></div>
+	<div id="sidebar" class="sidebar responsive">
+		<div>
+			<script type="text/javascript">
+				try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+			</script>
+
+			<div class="sidebar-shortcuts" id="sidebar-shortcuts" ng-if="isSPAdmin">
+				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+					<a class="btn btn-success" ui-sref="balancescale">
+						<i class="ace-icon fa fa-balance-scale"></i>
+					</a>
+
+					<a class="btn btn-info" ui-sref="products">
+						<i class="ace-icon fa fa-product-hunt"></i>
+					</a>
+
+					<a class="btn btn-warning" ui-sref="applicationusers">
+						<i class="ace-icon fa fa-address-card"></i>
+					</a>
+
+					<a class="btn btn-danger" ui-sref="configs">
+						<i class="ace-icon fa fa-cogs"></i>
+					</a>
+				</div>
+
+				<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+					<span class="btn btn-success"></span>
+
+					<span class="btn btn-info"></span>
+
+					<span class="btn btn-warning"></span>
+
+					<span class="btn btn-danger"></span>
+				</div>
+			</div><!-- /.sidebar-shortcuts -->
+
+			<ul class="nav nav-list">
+				<li ng-class="currentState == 'admin' ? 'active' : ''">
+					<a href="javascript:void(0)" ui-sref="admin">
+						<i class="menu-icon fa fa-tachometer fa-fw"></i>
+						<span class="menu-text"> Dashboard</span>
+					</a>
+					<b class="arrow"></b>
+				</li>
+				<li ng-if="!isSPAdmin" ng-class="currentState == 'invoice_input' ? 'active' : ''">
+					<a href="javascript:void(0)" ui-sref="invoice_input">
+						<i class="menu-icon fa fa-indent fa-fw"></i>
+						<span class="menu-text"> Invoice Input</span>
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				<li ng-class="currentState == 'invoices' ? 'active' : ''">
+					<a href="javascript:void(0)" ui-sref="invoices">
+						<i class="menu-icon fa fa-barcode fa-fw"></i>
+						<span class="menu-text"> Invoices List </span>
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				<li class="">
+					<!--<a href="javascript:void(0)" class="dropdown-toggle">-->
+					<a href="javascript:void(0)" ui-sref="account_report" ng-class="(currentState == 'account_report' || currentState == 'monthly_report') ? 'active' : ''">
+						<i class="menu-icon fa fa-bar-chart-o fa-fw"></i>
+						<span class="menu-text"> Reports </span>
+
+						<!--<b class="arrow fa fa-angle-down"></b>-->
+					</a>
+
+					<b class="arrow"></b>
+
+					<!--<ul class="submenu">
+		<li class="">
+			<a href="javascript:void(0)" ui-sref="account_report">
+				<i class="menu-icon fa fa-caret-right"></i>
+				Account Report
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+
+		<li class="">
+			<a href="javascript:void(0)" ui-sref="monthly_report">
+				<i class="menu-icon fa fa-caret-right"></i>
+				Monthly Report
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+	</ul>-->
+				</li>
+
+				<li ng-class="currentState == 'balance_scale' ? 'active' : ''">
+					<a href="javascript:void(0)" ui-sref="balancescale">
+						<i class="menu-icon fa fa-balance-scale fa-fw"></i>
+						<span class="menu-text"> Balance scale </span>
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				<li ng-class="currentState == 'products' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
+					<a href="javascript:void(0)" ui-sref="products">
+						<i class="menu-icon fa fa-product-hunt fa-fw "></i>
+						<span class="menu-text"> Products </span>
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+
+				<li ng-class="currentState == 'applicationusers' ? 'active' : ''" ng-if="isSPAdmin">
+					<a href="javascript:void(0)" ui-sref="applicationusers">
+						<i class="menu-icon fa fa fa-address-card fa-fw"></i>
+						<span class="menu-text"> Users </span>
+					</a>
+				</li>
+				<li ng-class="currentState == 'departments' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
+					<a href="javascript:void(0)" ui-sref="departments">
+						<i class="menu-icon fa fa-puzzle-piece fa-fw"></i>
+						<span class="menu-text"> Departments </span>
+					</a>
+				</li>
+				<li ng-class="currentState == 'customers' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
+					<a href="javascript:void(0)" ui-sref="customers">
+						<i class="menu-icon fa fa-group fa-fw"></i>
+						<span class="menu-text"> Customers </span>
+					</a>
+				</li>
+				<li ng-class="currentState == 'configs' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
+					<a href="javascript:void(0)" ui-sref="configs">
+						<i class="menu-icon fa fa-cogs fa-fw"></i>
+						<span class="menu-text"> Configs </span>
+					</a>
+				</li>
+			</ul><!-- /.nav-list -->
+
+			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+				<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+			</div>
+
+			<script type="text/javascript">
+				try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+			</script>
+		</div>
+	</div>
 
 	<div class="main-content">
 		<div class="main-content-inner">
@@ -103,15 +247,15 @@
 
 				&nbsp; &nbsp;
 				<span class="action-buttons">
-					<a href="#">
+					<a href="javascript:void(0)">
 						<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
 					</a>
 
-					<a href="#">
+					<a href="javascript:void(0)">
 						<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
 					</a>
 
-					<a href="#">
+					<a href="javascript:void(0)">
 						<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
 					</a>
 				</span>
@@ -119,7 +263,7 @@
 		</div>
 	</div>
 
-	<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+	<a href="javascript:void(0)" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
 		<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
 	</a>
 	<script>

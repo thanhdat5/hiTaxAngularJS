@@ -25,6 +25,9 @@
 			},
 			sortable: true,
 			pageable: true,
+			filterable: {
+				extra: false
+			},
 			resizeable: true,
 			columns: [
 				{

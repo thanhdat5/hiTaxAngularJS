@@ -18,6 +18,7 @@ namespace hiTaxAngularJS.Models
 		public virtual DbSet<Customer> Customers { get; set; }
 		public virtual DbSet<CustomerType> CustomerTypes { get; set; }
 		public virtual DbSet<Department> Departments { get; set; }
+		public virtual DbSet<Account> Accounts { get; set; }
 		public virtual DbSet<Error> Errors { get; set; }
 		public virtual DbSet<Invoice> Invoices { get; set; }
 		public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }

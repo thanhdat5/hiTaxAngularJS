@@ -17,7 +17,7 @@ namespace hiTaxAngularJS.Models
 
         public int Id { get; set; }
 
-        [StringLength(10)]
+        [StringLength(50)]
         public string Code { get; set; }
 
         public DateTime CreatedDate { get; set; }
@@ -41,10 +41,16 @@ namespace hiTaxAngularJS.Models
         public string ModifiedBy { get; set; }
 
         public bool IsDeleted { get; set; }
+		[StringLength(1)]
+		public string SH { get; set; }
+		public int? InvoiceAccount_Id { get; set; }
+		public int? InvoiceSAccount_Id { get; set; }
 
-        public virtual Company Company { get; set; }
+		public virtual Company Company { get; set; }
+		public virtual Account InvoiceAccount { get; set; }
+		public virtual Account InvoiceSAccount { get; set; }
 
-        public virtual Customer Customer { get; set; }
+		public virtual Customer Customer { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }

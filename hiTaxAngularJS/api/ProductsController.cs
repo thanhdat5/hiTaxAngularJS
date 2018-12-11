@@ -1,4 +1,5 @@
 ﻿using hiTax.Web;
+using hiTaxAngularJS.Common;
 using hiTaxAngularJS.Models;
 using hiTaxAngularJS.Models.Request;
 using hiTaxAngularJS.Models.Response;
@@ -17,12 +18,14 @@ namespace hiTaxAngularJS.api
 	public class ProductsController : ApiControllerBase
 	{
 		private hiTaxAngularJSDbContext db = new hiTaxAngularJSDbContext();
+		private PermissionHelper permissionHelper = new PermissionHelper();
 
 		[Route("GetAll")]
 		public HttpResponseMessage Get(HttpRequestMessage request)
 		{
 			return CreateHttpResponse(request, () =>
 			{
+				var currentUserInfo = permissionHelper.GetUserInfo();
 				var result = db.Products.Where(m => !m.IsDeleted).Select(m => new ProductResponse
 				{
 					Id = m.Id,
@@ -32,7 +35,11 @@ namespace hiTaxAngularJS.api
 					Description = m.Description,
 					UnitId = m.UnitId,
 					UnitName = m.Unit != null ? m.Unit.Name : "",
-				}).OrderBy(m => m.CompanyName).ThenBy(m => m.ProductName).ToList();
+				})
+				.Where(m => currentUserInfo.IsSPAdmin || (!currentUserInfo.IsSPAdmin && m.CompanyId == currentUserInfo.CompanyId))
+				.OrderBy(m => m.CompanyName)
+				.ThenBy(m => m.ProductName)
+				.ToList();
 
 				HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, result);
 				return response;
@@ -40,6 +47,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Add")]
+		[Authorize(Roles = "SPAdmin,Director")]
 		public HttpResponseMessage Post(HttpRequestMessage request, ProductRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
@@ -80,6 +88,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Update")]
+		[Authorize(Roles = "SPAdmin,Director")]
 		public HttpResponseMessage Put(HttpRequestMessage request, ProductRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
@@ -115,6 +124,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Delete")]
+		[Authorize(Roles = "SPAdmin,Director")]
 		public HttpResponseMessage Delete(HttpRequestMessage request, int id)
 		{
 			return CreateHttpResponse(request, () =>

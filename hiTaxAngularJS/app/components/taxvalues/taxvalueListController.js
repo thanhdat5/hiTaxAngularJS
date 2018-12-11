@@ -32,12 +32,29 @@
 							dataType: "json",
 						}
 				},
-				pageSize: 5,
+				pageSize: 10,
 				serverPaging: false,
-				serverSorting: false
+				serverSorting: false,
+				group: {
+					field: "CompanyName",
+					aggregates: [{
+						field: "CompanyName",
+						aggregate: "count"
+					}]
+				}
+			},
+			schema: {
+				model: {
+					fields: {
+						Value: { type: "number" }
+					}
+				}
 			},
 			sortable: true,
 			pageable: true,
+			filterable: {
+				extra: false
+			},
 			resizeable: true,
 			columns: [
 				{
@@ -56,7 +73,11 @@
 				},
 				{
 					field: "Value",
-					title: "Value Name"
+					type: 'number',
+					title: "Value Name",
+					template: function (dataItem) {
+						return Number(dataItem.Value);
+					}
 				},
 				{
 					title: "Action",

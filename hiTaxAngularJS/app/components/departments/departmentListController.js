@@ -32,12 +32,22 @@
 							dataType: "json",
 						}
 				},
-				pageSize: 5,
+				pageSize: 10,
 				serverPaging: false,
-				serverSorting: false
+				serverSorting: false,
+				group: {
+					field: "CompanyName",
+					aggregates: [{
+						field: "CompanyName",
+						aggregate: "count"
+					}]
+				}
 			},
 			sortable: true,
 			pageable: true,
+			filterable: {
+				extra: false
+			},
 			resizeable: true,
 			columns: [
 				{

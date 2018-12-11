@@ -1,0 +1,215 @@
+﻿<h3>
+	Invoice Input
+	<span class="pull-right">
+		<a class="btn btn-default btn-sm" ui-sref="invoices" href="javascript:void(0)"><span class="fa fa-barcode"></span> Invoices List</a>
+		<a class="btn btn-success btn-sm" ui-sref="invoices" href="javascript:void(0)" ng-click="saveAllItems()"><span class="fa fa-save"></span> Save All</a>
+	</span>
+</h3>
+<hr />
+<div>
+	<div class="tabbable tabs-left">
+		<ul class="nav nav-tabs" id="myTab3">
+			<li ng-repeat="invoice in invoices" ng-class="(invoice.Code == invoiceSelected.Code) ? 'active' : ''" ng-click="selectInvoice(invoice)">
+				<a data-toggle="tab" href="javascript:void(0)" data-target="#{{invoice.Code}}">
+					<i class="ace-icon fa fa-file-o"></i>
+					{{invoice.Code}}
+				</a>
+			</li>
+			<li ng-click="addNewItem()" style="cursor:pointer">
+				<a href="javascript:void(0)">
+					<i class="ace-icon fa fa-plus"></i>
+					Add new
+				</a>
+			</li>
+		</ul>
+
+		<div class="tab-content" style="min-height:400px">
+			<div class="tab-pane active" style="padding-bottom:10px; ">
+				<form id="main-form">
+					<div class="">
+						<div class="col-md-3 col-sm-6">
+							<div class="form-group">
+								<label>Invoice #&nbsp;<span style="color:red">*</span></label>
+								<input type="text" class="form-control" ng-model="invoiceSelected.Code" required validationMessage="Field is required.">
+							</div>
+						</div>
+						<div class="col-md-9 col-sm-6">
+							<p class="text-right">
+								<button class="btn btn-xs btn-success" ng-disabled="(invoiceSelected.Code == '' || invoiceSelected.CreatedDate == '' || invoiceSelected.CustomerId == '' || invoiceSelected.Value == '')" ng-click="saveItem()"><i class="fa fa-save fa-fw"></i></button>
+								<button class="btn btn-xs btn-danger" ng-click="deleteItem()"><i class="fa fa-trash fa-fw"></i></button>
+							</p>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="">
+						<div class="col-md-3 col-sm-6">
+							<div class="form-group">
+								<label>Date Created&nbsp;<span style="color:red">*</span></label>
+								<input kendo-date-picker ng-model="invoiceSelected.CreatedDate" style="width:100%" required validationMessage="Field is required." />
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="form-group">
+								<label>In/Out&nbsp;<span style="color:red">*</span></label>
+								<select class="form-control" ng-model="invoiceSelected.IsIn" required validationMessage="Field is required.">
+									<option ng-value="true" value="true">In</option>
+									<option ng-value="false" value="false">Out</option>
+								</select>
+							</div>
+						</div>
+						<div class="hidden-lg hidden-md hidden-sm">
+							<div style="clear:both;width:100%;height:10px;"></div>
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="form-group">
+								<label>Customer&nbsp;<span style="color:red">*</span></label>
+								<select class="form-control" ng-model="invoiceSelected.CustomerId" required validationMessage="Field is required.">
+									<option value="" ng-selected="invoiceSelected.CustomerId == ''">--Select--</option>
+									<option ng-repeat="item in allCustomer" ng-selected="invoiceSelected.CustomerId == item.Id" value="{{item.Id}}">{{item.CustomerName}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6">
+							<div class="form-group">
+								<label>Total</label>
+								<input disabled="disabled" type="text" class="form-control" ng-model="invoiceSelected.Value" required validationMessage="Field is required.">
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="clearfix"></div>
+				<div class="col-xs-12">
+					<p style="color:red" ng-show="invoiceSelected.Code == '' || invoiceSelected.CreatedDate == '' || invoiceSelected.CustomerId == '' || invoiceSelected.Value == ''">(*) All fields is required.</p>
+				</div>
+
+				<div class="col-xs-12">
+					<div class="widget-box widget-color-blue ui-sortable-handle">
+						<div class="widget-header widget-header-small">
+							<h6 class="widget-title">
+								<i class="ace-icon fa fa-sort"></i>
+								Add invoice details
+							</h6>
+							<div class="widget-toolbar">
+								<a href="javascript:void(0)" data-action="collapse">
+									<i class="ace-icon fa fa-minus" data-icon-show="fa-plus" data-icon-hide="fa-minus"></i>
+								</a>
+							</div>
+						</div>
+						<div class="widget-body">
+							<div class="widget-main">
+								<form id="sub-form">
+									<div class="row">
+										<div class="col-md-4 col-sm-6">
+											<div class="form-group">
+												<label>Department&nbsp;<span style="color:red">*</span></label>
+												<select class="form-control" ng-model="invoiceDetail.DepartmentId" required>
+													<option value="" selected>--Select--</option>
+													<option ng-repeat="item in allDepartment" value="{{item.Id}}">{{item.DepartmentName}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-2 col-sm-6">
+											<div class="form-group">
+												<label>Category&nbsp;<span style="color:red">*</span></label>
+												<select class="form-control" ng-model="invoiceDetail.CategoryId" required>
+													<option value="" selected>--Select--</option>
+													<option ng-repeat="item in allCategory" ng-if="item.IsShow" value="{{item.Id}}">{{item.Name}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="hidden-lg hidden-md hidden-sm">
+											<div style="clear:both;width:100%;height:10px;"></div>
+										</div>
+										<div class="col-md-2 col-sm-6">
+											<div class="form-group">
+												<label>Tax Value&nbsp;<span style="color:red">*</span></label>
+												<select class="form-control" ng-model="invoiceDetail.TaxValueId" required>
+													<option value="" selected>--Select--</option>
+													<option ng-repeat="item in allTaxValue" value="{{item.Id}}">{{item.Value}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-2 col-sm-6">
+											<div class="form-group">
+												<label>
+													Bruto&nbsp;<span style="color:red">*</span>
+												</label>
+												<input type="number" class="form-control" ng-model="invoiceDetail.Value" required>
+											</div>
+										</div>
+										<div class="hidden-lg hidden-md hidden-sm">
+											<div style="clear:both;width:100%;height:10px;"></div>
+										</div>
+										<div class="col-md-2 col-sm-12">
+											<div class="form-group text-right">
+												<label>Action</label>
+												<div class="">
+													<button ng-if="!isEditDetail" type="button" ng-disabled="(invoiceDetail.DepartmentId == '' || invoiceDetail.CategoryId == '' || invoiceDetail.TaxValueId == '' || invoiceDetail.Value == '')" class="btn btn-warning btn-sm" ng-click="addInvoiceDetail()">Add</button>
+													<button ng-if="isEditDetail" type="button" ng-disabled="(invoiceDetail.DepartmentId == '' || invoiceDetail.CategoryId == '' || invoiceDetail.TaxValueId == '' || invoiceDetail.Value == '')" class="btn btn-success btn-xs" ng-click="saveInvoiceDetail()">Save</button>
+													<button ng-if="isEditDetail" type="button" class="btn btn-default btn-xs" ng-click="cancelInvoiceDetail()">Cancel</button>
+												</div>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										<div class="col-xs-12">
+											<p style="color:red" ng-show="invoiceDetail.DepartmentId == '' || invoiceDetail.CategoryId == '' || invoiceDetail.TaxValueId == '' || invoiceDetail.Value == ''">(*) All fields is required.</p>
+										</div>
+									</div>
+									<div class="widget-box widget-color-orange ui-sortable-handle">
+										<div class="widget-header widget-header-small">
+											<h6 class="widget-title">
+												<i class="ace-icon fa fa-sort"></i>
+												Invoice details
+											</h6>
+											<div class="widget-toolbar">
+												<a href="javascript:void(0)" data-action="collapse">
+													<i class="ace-icon fa fa-minus" data-icon-show="fa-plus" data-icon-hide="fa-minus"></i>
+												</a>
+											</div>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main">
+												<div class="table-reponsive" style="overflow:auto">
+													<table class="table table-striped table-bordered">
+														<thead>
+															<tr>
+																<th class="oht-th-id">In/Out</th>
+																<th>Customer</th>
+																<th>Department</th>
+																<th>Category</th>
+																<th>Brutto</th>
+																<th>Tax</th>
+																<th style="width:80px;">Action</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr ng-if="invoiceSelected.Details != null && invoiceSelected.Details.length > 0" ng-repeat="item in invoiceSelected.Details">
+																<td>{{(invoiceSelected.IsIn ? "In" : "Out")}}</td>
+																<td>{{getCustomerNameById(invoiceSelected.CustomerId)}}</td>
+																<td>{{item.DepartmentName}}</td>
+																<td>{{item.CategoryName}}</td>
+																<td>{{item.Value}}</td>
+																<td>{{item.ValueTax}}</td>
+																<td>
+																	<button class="btn btn-primary btn-xs" ng-click="editDetail($index)"><span class="fa fa-pencil"></span></button>&nbsp;
+																	<button class="btn btn-danger btn-xs" ng-click="removeDetail($index)"><span class="fa fa-trash"></span></button>
+																</td>
+															</tr>
+															<tr ng-if="invoiceSelected.Details == null || invoiceSelected.Details.length <= 0">
+																<td colspan="7">No record found.</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

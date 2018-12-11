@@ -124,3 +124,11 @@
 		transform: rotate(360deg);
 	}
 }
+
+.profile-info-name {
+	width: 200px !important;
+}
+
+.k-datepicker input {
+	height: 27px !important;
+}

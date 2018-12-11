@@ -4,6 +4,7 @@
 	angular.module('hiTax',
 		[
 			'hiTax.users',
+			'hiTax.profile',
 			'hiTax.companies',
 			'hiTax.categories',
 			'hiTax.units',
@@ -12,6 +13,11 @@
 			'hiTax.customers',
 			'hiTax.taxvalues',
 			'hiTax.products',
+			'hiTax.invoices',
+			'hiTax.accountReport',
+			'hiTax.monthlyReport',
+			'hiTax.invoiceInput',
+			'hiTax.accounts',
 			'hiTax.common'
 		]
 	)
@@ -35,6 +41,7 @@
 			})
 			.state('profile', {
 				url: "/profile",
+				parent: 'base',
 				templateUrl: "/app/components/profile/profileView.html",
 				controller: "profileController"
 			})
@@ -104,8 +111,38 @@
 				templateUrl: "/app/components/products/productListView.html",
 				controller: "productListController"
 			})
+			.state('invoices', {
+				url: "/invoices",
+				parent: 'base',
+				templateUrl: "/app/components/invoices/invoiceListView.html",
+				controller: "invoiceListController"
+			})
+			.state('account_report', {
+				url: "/account_report",
+				parent: 'base',
+				templateUrl: "/app/components/reports/account_reportView.html",
+				controller: "accountReportController"
+			})
+			.state('monthly_report', {
+				url: "/monthly_report",
+				parent: 'base',
+				templateUrl: "/app/components/reports/monthly_reportView.html",
+				controller: "monthlyReportController"
+			})
+			.state('invoice_input', {
+				url: "/invoice_input",
+				parent: 'base',
+				templateUrl: "/app/components/invoiceInput/invoiceInputView.html",
+				controller: "invoiceInputController"
+			})
+			.state('accounts', {
+				url: "/accounts",
+				parent: 'base',
+				templateUrl: "/app/components/accounts/accountListView.html",
+				controller: "accountListController"
+			})
 			;
-		//$urlRouterProvider.otherwise('/login');
+		$urlRouterProvider.otherwise('/login');
 	}
 
 	function configAuthentication($httpProvider) {

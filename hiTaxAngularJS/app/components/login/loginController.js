@@ -1,5 +1,5 @@
 ﻿(function (app) {
-	app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService', 'authenticationService', '$state','$http',
+	app.controller('loginController', ['$scope', 'loginService', '$injector', 'notificationService', 'authenticationService', '$state', '$http',
 		function ($scope, loginService, $injector, notificationService, authenticationService, $state, $http) {
 			$scope.isLoading = function () {
 				return $http.pendingRequests.length > 0;

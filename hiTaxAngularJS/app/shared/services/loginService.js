@@ -20,6 +20,8 @@
 					authData.authenticationData.IsAuthenticated = true;
 					authData.authenticationData.userName = userName;
 					deferred.resolve(null);
+
+
 				}, function (err, status) {
 					authData.authenticationData.IsAuthenticated = false;
 					authData.authenticationData.userName = "";
@@ -34,6 +36,7 @@
 					authData.authenticationData.IsAuthenticated = false;
 					authData.authenticationData.userName = "";
 					authData.authenticationData.accessToken = "";
+					localStorage.clear();
 					$state.go('login');
 				}, null);
 

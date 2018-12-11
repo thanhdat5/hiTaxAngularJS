@@ -36,6 +36,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Add")]
+		[Authorize(Roles = "SPAdmin")]
 		public HttpResponseMessage Post(HttpRequestMessage request, CompanyRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
@@ -73,6 +74,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Update")]
+		[Authorize(Roles = "SPAdmin")]
 		public HttpResponseMessage Put(HttpRequestMessage request, CompanyRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
@@ -104,6 +106,7 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("Delete")]
+		[Authorize(Roles = "SPAdmin")]
 		public HttpResponseMessage Delete(HttpRequestMessage request, int id)
 		{
 			return CreateHttpResponse(request, () =>

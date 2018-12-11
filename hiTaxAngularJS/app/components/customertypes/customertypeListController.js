@@ -19,12 +19,15 @@
 							dataType: "json",
 						}
 				},
-				pageSize: 5,
+				pageSize: 10,
 				serverPaging: false,
 				serverSorting: false
 			},
 			sortable: true,
 			pageable: true,
+			filterable: {
+				extra: false
+			},
 			resizeable: true,
 			columns: [
 				{

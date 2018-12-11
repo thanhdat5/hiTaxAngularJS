@@ -1,7 +1,7 @@
 ﻿(function (app) {
 	app.controller("userListController", userListController);
-	userListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService'];
-	function userListController($scope, $rootScope, apiService, $ngBootbox, notificationService) {
+	userListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService', 'authData'];
+	function userListController($scope, $rootScope, apiService, $ngBootbox, notificationService, authData) {
 		// Set page title
 		$rootScope.pageTitle = "User Management";
 
@@ -25,16 +25,29 @@
 				transport: {
 					read:
 						{
-							url: "api/ApplicationUsers",
+							url: "api/ApplicationUsers/GetAll",
+							beforeSend: function (req) {
+								req.setRequestHeader('Authorization', 'Bearer ' + authData.authenticationData.accessToken);
+							},
 							dataType: "json",
 						}
 				},
-				pageSize: 5,
+				pageSize: 10,
 				serverPaging: true,
-				serverSorting: true
+				serverSorting: true,
+				group: {
+					field: "CompanyName",
+					aggregates: [{
+						field: "CompanyName",
+						aggregate: "count"
+					}]
+				}
 			},
 			sortable: true,
 			pageable: true,
+			filterable: {
+				extra: false
+			},
 			resizeable: true,
 			columns: [
 				{
@@ -43,20 +56,31 @@
 					hidden: true
 				}, {
 					field: "ImagePath",
-					title: "Image",
+					title: "#",
+					filterable: false,
 					template: function (dataItem) {
 						return "<img style='height:40px; width:40px;' ng-src='" + (dataItem.ImagePath != null && dataItem.ImagePath != "" ? dataItem.ImagePath : "/Content/images/NoImage.gif") + "' alt='" + dataItem.UserName + "' err-src='/Content/images/NoImage.gif' />";
 					},
 					width: "60px"
-				}, {
+				},
+				{
 					field: "UserName",
 					title: "UserName"
-				}, {
+				},
+				{
 					field: "DisplayName",
 					title: "Display Name"
-				}, {
-					field: "CompanyId",
+				},
+				{
+					field: "CompanyName",
 					title: "Company"
+				},
+				{
+					field: "Roles",
+					title: "Roles",
+					template: function (dataItem) {
+						return dataItem.Roles.join(",");
+					}
 				},
 				{
 					title: "Action",
