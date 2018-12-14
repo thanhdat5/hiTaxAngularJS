@@ -7,6 +7,22 @@
 		$scope.userInfo = JSON.parse(sessionStorage.hiTaxUserLoggedInfo);
 		// Set data gridview
 		$scope.mainGridOptions = {
+			toolbar: ["excel", "pdf"],
+			excel: {
+				fileName: "Invoices List.xlsx",
+				proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+				filterable: true
+			},
+			pdf: {
+				allPages: true,
+				avoidLinks: true,
+				paperSize: "A4",
+				margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
+				landscape: true,
+				repeatHeaders: true,
+				scale: 0.8,
+				fileName: "Invoices List.pdf",
+			},
 			dataSource: {
 				type: "json",
 				transport: {
@@ -212,6 +228,22 @@
 
 		// Set data gridview
 		$scope.modalGridOptions = {
+			toolbar: ["excel", "pdf"],
+			excel: {
+				fileName: "Invoices Deleted.xlsx",
+				proxyURL: "https://demos.telerik.com/kendo-ui/service/export",
+				filterable: true
+			},
+			pdf: {
+				allPages: true,
+				avoidLinks: true,
+				paperSize: "A4",
+				margin: { top: "2cm", left: "1cm", right: "1cm", bottom: "1cm" },
+				landscape: true,
+				repeatHeaders: true,
+				scale: 0.8,
+				fileName: "Invoices Deleted.pdf",
+			},
 			dataSource: {
 				type: "json",
 				transport: {

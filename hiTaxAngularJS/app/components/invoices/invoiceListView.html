@@ -6,6 +6,8 @@
 	<!-- ng-if="!userInfo.IsSPAdmin"  -->
 	<a class="btn btn-success btn-sm" ui-sref="invoice_input" href="javascript:void(0)"><span class="fa fa-plus"></span>&nbsp;Add new</a>
 	<span class="pull-right">
+		<a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-regular-accounting" href="javascript:void(0)"><span class="fa fa-calculator"></span> Regular accounting</a>&nbsp;
+		<a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-tax-accounting" href="javascript:void(0)"><span class="fa fa-calculator"></span> Tax accounting</a>&nbsp;
 		<a class="btn btn-primary btn-sm" ui-sref="account_report" href="javascript:void(0)"><span class="fa fa-pie-chart"></span> Accounting report</a>&nbsp;
 		<a class="btn btn-primary btn-sm" ui-sref="monthly_report" href="javascript:void(0)"><span class="fa fa-bar-chart"></span> Monthly report</a>&nbsp;
 		<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-history" href="javascript:void(0)"><span class="fa fa-bar-chart"></span> Delete History</a>
@@ -91,6 +93,42 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-success btn-sm" ng-click="saveItem()">Save changes</button>
 				<button type="button" class="btn btn-default btn-sm" ng-click="closeModal()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-regular-accounting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Regular Accounting</h4>
+			</div>
+			<div class="modal-body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-tax-accounting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Tax Accounting</h4>
+			</div>
+			<div class="modal-body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
