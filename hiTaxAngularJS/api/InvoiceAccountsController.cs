@@ -40,7 +40,7 @@ namespace hiTaxAngularJS.api
 		{
 			return CreateHttpResponse(request, () =>
 			{
-				var result = db.Accounts.Where(m => !m.IsDeleted && !m.IsSymmetric).Select(m => new InvoiceAccountResponse
+				var result = db.Accounts.Where(m => !m.IsDeleted).Select(m => new InvoiceAccountResponse//&& !m.IsSymmetric
 				{
 					Id = m.Id,
 					AccountNumber = m.AccountNumber,
@@ -57,7 +57,7 @@ namespace hiTaxAngularJS.api
 		{
 			return CreateHttpResponse(request, () =>
 			{
-				var result = db.Accounts.Where(m => !m.IsDeleted && m.IsSymmetric).Select(m => new InvoiceAccountResponse
+				var result = db.Accounts.Where(m => !m.IsDeleted).Select(m => new InvoiceAccountResponse//&& m.IsSymmetric
 				{
 					Id = m.Id,
 					AccountNumber = m.AccountNumber,

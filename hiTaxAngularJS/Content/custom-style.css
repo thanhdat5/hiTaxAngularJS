@@ -132,3 +132,16 @@
 .k-datepicker input {
 	height: 27px !important;
 }
+
+.daterangepicker {
+	box-shadow: none !important;
+	border-bottom: 1px #ddd solid;
+	min-width: 230px;
+}
+
+.removeFilterDate {
+	color: #00a19c !important;
+	float: right;
+	font-size: 13px;
+	padding: 5px 10px;
+}

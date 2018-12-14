@@ -294,6 +294,10 @@
     <Compile Include="Migrations\201812111814146_AddTableAccount5.Designer.cs">
       <DependentUpon>201812111814146_AddTableAccount5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812141744486_UpdateNullable.cs" />
+    <Compile Include="Migrations\201812141744486_UpdateNullable.Designer.cs">
+      <DependentUpon>201812141744486_UpdateNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -394,6 +398,8 @@
     <Content Include="app\shared\directives\asDateDirective.js" />
     <Content Include="app\shared\directives\pagerDirective.html" />
     <Content Include="app\shared\directives\pagerDirective.js" />
+    <Content Include="app\shared\directives\hitax-date-range-picker.directive.js" />
+    <Content Include="app\shared\directives\hitax-date-range-picker.html" />
     <Content Include="app\shared\filters\statusFilter.js" />
     <Content Include="app\shared\modules\hiTax.common.js" />
     <Content Include="app\shared\services\apiService.js" />
@@ -404,7 +410,11 @@
     <Content Include="app\shared\services\notificationService.js" />
     <Content Include="app\shared\views\baseView.html" />
     <Content Include="Content\custom-style.css" />
+    <Content Include="Content\daterangepicker.min.css" />
+    <Content Include="Content\daterangepicker.min.js" />
     <Content Include="Content\images\NoImage.gif" />
+    <Content Include="Content\knockout-3.4.2.js" />
+    <Content Include="Content\moment.min.js" />
     <Content Include="Content\Template\ace-master\assets\avatars\avatar.png" />
     <Content Include="Content\Template\ace-master\assets\avatars\avatar1.png" />
     <Content Include="Content\Template\ace-master\assets\avatars\avatar2.png" />
@@ -5051,6 +5061,7 @@
     <Content Include="Content\Template\libs\lodash\vendor\backbone\LICENSE" />
     <Content Include="Content\Template\libs\lodash\vendor\underscore\LICENSE" />
     <Content Include="Content\Template\libs\lodash\yarn.lock" />
+    <Content Include="Content\Export-Files.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -5144,6 +5155,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812111814146_AddTableAccount5.resx">
       <DependentUpon>201812111814146_AddTableAccount5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812141744486_UpdateNullable.resx">
+      <DependentUpon>201812141744486_UpdateNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

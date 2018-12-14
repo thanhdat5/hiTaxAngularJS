@@ -83,7 +83,7 @@
 						['Type', 'Total'],
 						['Revenue', $scope.result.TotalRevenue],
 						['Costs', $scope.result.TotalCosts],
-						['Result (vari.)', ($scope.result.TotalRevenue - $scope.result.TotalCosts)],
+						['Result (vari.)', ($scope.result.TotalRevenue > $scope.result.TotalCosts ? $scope.result.TotalRevenue - $scope.result.TotalCosts : $scope.result.TotalCosts - $scope.result.TotalRevenue)],
 					]);
 
 					var options = {

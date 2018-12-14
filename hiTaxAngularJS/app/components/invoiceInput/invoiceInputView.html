@@ -113,7 +113,7 @@
 												<label>Category&nbsp;<span style="color:red">*</span></label>
 												<select class="form-control" ng-model="invoiceDetail.CategoryId" required>
 													<option value="" selected>--Select--</option>
-													<option ng-repeat="item in allCategory" ng-if="item.IsShow" value="{{item.Id}}">{{item.Name}}</option>
+													<option ng-repeat="item in allCategory" value="{{item.Id}}">{{item.Name}}</option>   <!--ng-if="item.IsShow"-->
 												</select>
 											</div>
 										</div>
@@ -188,7 +188,7 @@
 																<td>{{getCustomerNameById(invoiceSelected.CustomerId)}}</td>
 																<td>{{item.DepartmentName}}</td>
 																<td>{{item.CategoryName}}</td>
-																<td>{{item.Value}}</td>
+																<td>{{item.Value | number}}.00 €</td>
 																<td>{{item.ValueTax}}</td>
 																<td>
 																	<button class="btn btn-primary btn-xs" ng-click="editDetail($index)"><span class="fa fa-pencil"></span></button>&nbsp;

@@ -21,13 +21,13 @@ namespace hiTaxAngularJS.api
 		private PermissionHelper permissionHelper = new PermissionHelper();
 
 		[Route("GetAll")]
-		public HttpResponseMessage Get(HttpRequestMessage request)
+		public HttpResponseMessage Get(HttpRequestMessage request, DateTime fromDate, DateTime toDate)
 		{
 			return CreateHttpResponse(request, () =>
 			{
 				var currentUserInfo = permissionHelper.GetUserInfo();
 				var result = db.Invoices
-				.Where(m => !m.IsDeleted)
+				.Where(m => !m.IsDeleted && (m.CreatedDate >= fromDate) && (m.CreatedDate <= toDate))
 				.Select(m => new InvoiceResponse
 				{
 					Id = m.Id,
@@ -63,13 +63,13 @@ namespace hiTaxAngularJS.api
 		}
 
 		[Route("GetAllDeleted")]
-		public HttpResponseMessage GetAllDeleted(HttpRequestMessage request)
+		public HttpResponseMessage GetAllDeleted(HttpRequestMessage request, DateTime fromDate, DateTime toDate)
 		{
 			return CreateHttpResponse(request, () =>
 			{
 				var currentUserInfo = permissionHelper.GetUserInfo();
 				var result = db.Invoices
-				.Where(m => m.IsDeleted == true)
+				.Where(m => m.IsDeleted == true && (m.CreatedDate >= fromDate) && (m.CreatedDate <= toDate))
 				.Select(m => new InvoiceResponse
 				{
 					Id = m.Id,

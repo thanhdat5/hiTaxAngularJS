@@ -136,27 +136,27 @@
 					<b class="arrow"></b>
 
 					<!--<ul class="submenu">
-		<li class="">
-			<a href="javascript:void(0)" ui-sref="account_report">
-				<i class="menu-icon fa fa-caret-right"></i>
-				Account Report
-			</a>
+						<li class="">
+							<a href="javascript:void(0)" ui-sref="account_report">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Account Report
+							</a>
 
-			<b class="arrow"></b>
-		</li>
+							<b class="arrow"></b>
+						</li>
 
-		<li class="">
-			<a href="javascript:void(0)" ui-sref="monthly_report">
-				<i class="menu-icon fa fa-caret-right"></i>
-				Monthly Report
-			</a>
+						<li class="">
+							<a href="javascript:void(0)" ui-sref="monthly_report">
+								<i class="menu-icon fa fa-caret-right"></i>
+								Monthly Report
+							</a>
 
-			<b class="arrow"></b>
-		</li>
-	</ul>-->
+							<b class="arrow"></b>
+						</li>
+					</ul>-->
 				</li>
 
-				<li ng-class="currentState == 'balance_scale' ? 'active' : ''">
+				<li class="hidden" ng-class="currentState == 'balance_scale' ? 'active' : ''">
 					<a href="javascript:void(0)" ui-sref="balancescale">
 						<i class="menu-icon fa fa-balance-scale fa-fw"></i>
 						<span class="menu-text"> Balance scale </span>
@@ -164,19 +164,17 @@
 
 					<b class="arrow"></b>
 				</li>
-				<li ng-class="currentState == 'products' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
-					<a href="javascript:void(0)" ui-sref="products">
-						<i class="menu-icon fa fa-product-hunt fa-fw "></i>
-						<span class="menu-text"> Products </span>
-					</a>
-
-					<b class="arrow"></b>
-				</li>
 
 				<li ng-class="currentState == 'applicationusers' ? 'active' : ''" ng-if="isSPAdmin">
 					<a href="javascript:void(0)" ui-sref="applicationusers">
-						<i class="menu-icon fa fa fa-address-card fa-fw"></i>
+						<i class="menu-icon fa fa fa-user fa-fw"></i>
 						<span class="menu-text"> Users </span>
+					</a>
+				</li>
+				<li ng-class="currentState == 'accounts' ? 'active' : ''" ng-if="isSPAdmin">
+					<a href="javascript:void(0)" ui-sref="accounts">
+						<i class="menu-icon fa fa fa-address-card fa-fw"></i>
+						<span class="menu-text"> Account </span>
 					</a>
 				</li>
 				<li ng-class="currentState == 'departments' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
@@ -190,6 +188,22 @@
 						<i class="menu-icon fa fa-group fa-fw"></i>
 						<span class="menu-text"> Customers </span>
 					</a>
+				</li>
+				<li ng-class="currentState == 'products' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
+					<a href="javascript:void(0)" ui-sref="products">
+						<i class="menu-icon fa fa-product-hunt fa-fw "></i>
+						<span class="menu-text"> Products </span>
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				<li ng-class="currentState == 'taxvalues' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
+					<a href="javascript:void(0)" ui-sref="taxvalues">
+						<i class="menu-icon fa fa-balance-scale fa-fw "></i>
+						<span class="menu-text"> Tax Value </span>
+					</a>
+
+					<b class="arrow"></b>
 				</li>
 				<li ng-class="currentState == 'configs' ? 'active' : ''" ng-if="isSPAdmin || isDirector">
 					<a href="javascript:void(0)" ui-sref="configs">

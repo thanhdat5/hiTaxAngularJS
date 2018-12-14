@@ -58,19 +58,9 @@ namespace hiTaxAngularJS.Models
 				.WithRequired(e => e.Invoice)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<Product>()
-				.HasMany(e => e.InvoiceDetails)
-				.WithRequired(e => e.Product)
-				.WillCascadeOnDelete(false);
-
 			modelBuilder.Entity<TaxValue>()
 				.HasMany(e => e.InvoiceDetails)
 				.WithRequired(e => e.TaxValue)
-				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<Unit>()
-				.HasMany(e => e.InvoiceDetails)
-				.WithRequired(e => e.Unit)
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Unit>()
