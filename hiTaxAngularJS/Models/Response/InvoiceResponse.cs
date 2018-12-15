@@ -24,4 +24,9 @@ namespace hiTaxAngularJS.Models.Response
 		public int? AccountNumber { get; set; }
 		public int? SAccountNumber { get; set; }
 	}
+	public class InvoiceExportResponse:InvoiceResponse{
+		public int DepartmentId { get; set; }
+		public string DepartmentName { get; set; }
+		public double ValueTax { get; set; }
+	}
 }

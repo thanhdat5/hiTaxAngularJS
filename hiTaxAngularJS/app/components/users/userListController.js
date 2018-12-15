@@ -70,7 +70,8 @@
 					field: "Id",
 					title: "ID",
 					hidden: true
-				}, {
+				},
+				{
 					field: "ImagePath",
 					title: "#",
 					filterable: false,
@@ -101,15 +102,45 @@
 				{
 					title: "Action",
 					template: function (dataItem) {
-						return '<button class="btn btn-primary btn-xs" ng-click="editItem(dataItem)"><span class="fa fa-edit"></span></button>&nbsp;<button class="btn btn-danger btn-xs" ng-click="deleteItem(dataItem)"><span class="fa fa-trash"></span></button>';
+						var isAdmin = dataItem.Roles.indexOf("SPAdmin") == -1;
+						return '<span><button type="button" ng-click="showUpdatePermission(dataItem)" class="btn btn-xs btn-info">Update Permission</button>&nbsp;</span><button type="button" ng-click="showChangePasswordModal(dataItem)" class="btn btn-xs btn-warning">Change password</button>&nbsp;<button class="btn btn-primary btn-xs" ng-click="editItem(dataItem)"><span class="fa fa-edit"></span></button>&nbsp;<button class="btn btn-danger btn-xs" ng-click="deleteItem(dataItem)"><span class="fa fa-trash"></span></button>';
 					},
-					width: "80px"
+					width: "330px"
 				}
 			]
 		};
 
+		$scope.changePassword = function () {
+			var validator = $("#sub-form").kendoValidator().data("kendoValidator");
+			if (validator.validate()) {
+				if ($scope.changePasswordModal.OldPassword.length < 6 || $scope.changePasswordModal.NewPassword.length < 6 || $scope.changePasswordModal.ConfirmPassword.length < 6) {
+					notificationService.displayError("The Password must be at least 6 characters long.");
+					return;
+				}
+				if ($scope.changePasswordModal.NewPassword != $scope.changePasswordModal.ConfirmPassword) {
+					notificationService.displayError("The new password and confirmation password do not match.");
+					return;
+				}
+				var postData = {
+					OldPassword: $scope.changePasswordModal.OldPassword,
+					NewPassword: $scope.changePasswordModal.NewPassword,
+					ConfirmPassword: $scope.changePasswordModal.ConfirmPassword
+				};
+				apiService.put('/api/ApplicationUsers/ChangePassword/' + $scope.changePasswordModal.Id, postData,
+					function (success) {
+						notificationService.displaySuccess('Password was changed successfully.');
+						$scope.closeModal();
+					},
+					function (error) {
+						notificationService.displayError(error.data);
+					}
+				);
+			}
+		}
+
 		// Action
 		$scope.popupModel = {};
+		$scope.changePasswordModal = {};
 		$scope.popupTitle = "";
 		$scope.addItem = function () {
 			$scope.popupTitle = "Add new item";
@@ -118,16 +149,80 @@
 
 		$scope.editItem = function (dataItem) {
 			$scope.popupTitle = "Edit item";
+			dataItem.Age = dataItem != null && dataItem.Age != null ? parseInt(dataItem.Age) : null;
 			$scope.popupModel = JSON.parse(JSON.stringify(dataItem));
 			showModal();
 		}
 
-		$scope.saveItem = function () {
-			if ($scope.popupModel.Id) {
-				alert("Edit");
-			} else {
-				alert("Add");
+		// Select image
+		$scope.selectFile = function () {
+			$('#uploadEditorImage')[0].value = null;
+			$('#uploadEditorImage').trigger("click");
+		}
+
+		// Upload image
+		$("#uploadEditorImage").change(function () {
+			var data = new FormData();
+			var files = $("#uploadEditorImage").get(0).files;
+			if (files.length > 0) {
+				data.append("UploadedImage", files[0]);
 			}
+			var ajaxRequest = $.ajax({
+				type: "POST",
+				url: "/api/ApplicationUsers/UploadImage",
+				contentType: false,
+				processData: false,
+				data: data,
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader("Authorization", 'Bearer ' + authData.authenticationData.accessToken);
+				},
+			});
+
+			ajaxRequest.done(function (response, textStatus) {
+				$scope.$apply(function () {
+					$scope.popupModel.ImagePath = response;
+					notificationService.displaySuccess('The profile image was uploaded successfully.');
+				});
+
+			});
+		});
+
+		$scope.saveItem = function () {
+			var validator = $("#main-form").kendoValidator().data("kendoValidator");
+			if (validator.validate()) {
+				if ($scope.popupModel.PasswordHash != $scope.popupModel.ConfirmPassword) {
+					notificationService.displayError("The new password and confirmation password do not match.");
+					return;
+				}
+				$scope.popupModel.Email = $scope.popupModel.UserName;
+				if ($scope.popupModel.Id) {
+					apiService.put('/api/ApplicationUsers/Update', $scope.popupModel,
+						function (success) {
+							notificationService.displaySuccess('User info saved successfully.');
+							reloadGrid();
+							$scope.closeModal();
+						},
+						function (error) {
+							notificationService.displayError(error.data.Message);
+							notificationService.displayErrorValidation(error);
+						}
+					);
+				} else {
+					apiService.post('/api/ApplicationUsers/Insert', $scope.popupModel,
+						function (success) {
+							notificationService.displaySuccess('User info saved successfully.');
+							reloadGrid();
+							$scope.closeModal();
+						},
+						function (error) {
+							notificationService.displayError(error.data);
+							notificationService.displayErrorValidation(error);
+						}
+					);
+				}
+
+			}
+
 		}
 
 		$scope.deleteItem = function (dataItem) {
@@ -153,16 +248,70 @@
 		// Hide Modal
 		$scope.closeModal = function () {
 			$scope.popupModel = {};
+			$scope.changePasswordModal = {};
+			$scope.changePermissionModel = {};
 			$scope.popupTitle = "";
 			$('#main-modal').modal('hide');
+			$('#change-password-modal').modal('hide');
+			$('#change-permission-modal').modal('hide');
 		}
 
 		function showModal() {
 			$('#main-modal').modal('show');
 		}
-
+		$scope.showChangePasswordModal = function (dataItem) {
+			$scope.changePasswordModal = {
+				Id: dataItem.Id,
+				UserName: dataItem.UserName,
+				OldPassword: null,
+				NewPassword: null,
+				ConfirmPassword: null
+			};
+			$('#change-password-modal').modal('show');
+		}
+		$scope.showUpdatePermission = function (dataItem) {
+			$scope.changePermissionModel = {
+				Id: dataItem.Id,
+				UserName: dataItem.UserName,
+				IsSPAdmin: dataItem.Roles.indexOf("SPAdmin") != -1,
+				IsDirector: dataItem.Roles.indexOf("Director") != -1,
+				IsStaff: dataItem.Roles.indexOf("Staff") != -1,
+			};
+			$('#change-permission-modal').modal('show');
+		}
 		function reloadGrid() {
 			$('#main-grid').data('kendoGrid').dataSource.read();
 		}
+
+
+		$scope.changePermission = function () {
+			var validator = $("#permission-form").kendoValidator().data("kendoValidator");
+			if (validator.validate()) {
+				var roles = [];
+				if ($scope.changePermissionModel.IsSPAdmin) {
+					roles.push("SPAdmin");
+				}
+				if ($scope.changePermissionModel.IsDirector) {
+					roles.push("Director");
+				}
+				if ($scope.changePermissionModel.IsStaff) {
+					roles.push("Staff");
+				}
+				var postData = {
+					Id: $scope.changePermissionModel.Id,
+					Roles: roles
+				};
+				apiService.put('/api/ApplicationUsers/UpdateRole', postData,
+					function (success) {
+						notificationService.displaySuccess('User roles was changed successfully.');
+						$scope.closeModal();
+						reloadGrid();
+					},
+					function (error) {
+						notificationService.displayError(error.data);
+					}
+				);
+			}
+		}
 	}
-})(angular.module('hiTax.users', []));
+})(angular.module('hiTax.users', ["kendo.directives"]));

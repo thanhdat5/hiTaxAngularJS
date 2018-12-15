@@ -1,7 +1,7 @@
 ﻿(function (app) {
 	app.controller("invoiceListController", invoiceListController);
-	invoiceListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService', 'authData', '$rootScope'];
-	function invoiceListController($scope, $rootScope, apiService, $ngBootbox, notificationService, authData, $rootScope) {
+	invoiceListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService', 'authData', '$rootScope','$http'];
+	function invoiceListController($scope, $rootScope, apiService, $ngBootbox, notificationService, authData, $rootScope, $http) {
 		// Set page title
 		$rootScope.pageTitle = "invoice Management";
 		$scope.userInfo = JSON.parse(sessionStorage.hiTaxUserLoggedInfo);
@@ -735,5 +735,19 @@
 				]
 			};
 		};
+
+		$scope.exportAccounting = function () {
+			$http.defaults.headers.post['Authorization'] = 'Bearer ' + authData.authenticationData.accessToken;
+			$http.post("/api/Invoices/ExportAccounting?fromDate=" + formatDate($scope.fromDate) + "&toDate=" + formatDate($scope.toDate), null,
+				{
+					responseType: "arraybuffer"
+				}).then(function (response) {
+					var myBuffer = new Uint8Array(response.data);
+					var data = new Blob([myBuffer],
+						{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+					var fileName = "hiTax_Export Accounting_" + moment().format('DDMMYYYY') + ".xlsx";
+					saveAs(data, fileName);
+				});
+		}
 	}
 })(angular.module('hiTax.invoices', ["kendo.directives"]));

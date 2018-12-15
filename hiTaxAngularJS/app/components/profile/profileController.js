@@ -99,7 +99,7 @@
 					notificationService.displayError("The new password and confirmation password do not match.");
 					return;
 				}
-				apiService.put('/api/ApplicationUsers/ChangePassword', $scope.popupModel,
+				apiService.put('/api/ApplicationUsers/ChangePassword/0', $scope.popupModel,
 					function (success) {
 						notificationService.displaySuccess('Password was changed successfully.');
 						$scope.closeModal();

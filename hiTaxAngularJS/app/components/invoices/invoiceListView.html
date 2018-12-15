@@ -1,7 +1,6 @@
 ﻿<h3>
-	Invoices
-	<div class="dropdown sorting noExport pull-right">
-		<a style="font-size:16px;" href="javascript:void(0)" ng-click="showDropdown = !showDropdown">{{filter}}&nbsp;<span class="fa fa-filter"></span></a>
+	<div class="dropdown sorting pull-left">
+		<a href="javascript:void(0)" ng-click="showDropdown = !showDropdown"><span class="fa fa-filter"></span>&nbsp;{{filter}}</a>
 		<div ng-show="showDropdown" class="dropdown-menu" style="display:block;padding:0;">
 			<ul style="list-style:none;margin-left:0">
 				<li>
@@ -11,9 +10,13 @@
 			</ul>
 		</div>
 	</div>
+	<span>&nbsp;Invoices</span>
+	<div class="pull-right">
+		<a href="javascript:void(0)" ng-click="exportAccounting()" class="btn btn-sm btn-success"><span class="fa fa-download"></span>&nbsp;<span class="hidden-xs">Export Accounting</span></a>
+	</div>
 </h3>
 <hr />
-<p>
+<p class="button-invoice">
 	<!-- ng-if="!userInfo.IsSPAdmin"  -->
 	<a class="btn btn-success btn-sm" ui-sref="invoice_input" href="javascript:void(0)"><span class="fa fa-plus"></span>&nbsp;Add new</a>
 	<span class="pull-right">
@@ -25,7 +28,7 @@
 			<a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-tax-accounting" href="javascript:void(0)"><span class="fa fa-calculator"></span> Tax accounting</a>&nbsp;
 			<a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-debt-accounting" href="javascript:void(0)"><span class="fa fa-calculator"></span> Debt Cccounting</a>&nbsp;
 		</span>
-		<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-history" href="javascript:void(0)"><span class="fa fa-bar-chart"></span> Delete History</a>
+		<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-history" href="javascript:void(0)"><span class="fa fa-bar-chart"></span> Delete History</a>
 	</span>
 	<div class="clearfix"></div>
 </p>

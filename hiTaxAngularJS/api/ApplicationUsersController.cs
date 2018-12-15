@@ -297,14 +297,25 @@ namespace hiTaxAngularJS.Api
 					var currentObject = db.ApplicationUsers.Find(requestParam.Id);
 					if (currentObject != null)
 					{
-						currentObject.CompanyId = requestParam.CompanyId;
-						currentObject.DisplayName = requestParam.DisplayName;
-						currentObject.Address = requestParam.Address;
-						currentObject.Age = requestParam.Age;
-						currentObject.AboutMe = requestParam.AboutMe;
-						currentObject.ImagePath = requestParam.ImagePath;
-						db.SaveChanges();
-						response = request.CreateResponse(HttpStatusCode.OK, requestParam);
+						if (currentObject.UserName.ToLower() != requestParam.UserName.ToLower())
+						{
+							var checkUser = db.ApplicationUsers.FirstOrDefault(m => m.Email.ToLower().Equals(requestParam.Email.ToLower()) || m.UserName.ToLower().Equals(requestParam.UserName.ToLower()));
+							if (checkUser != null)
+							{
+								response = request.CreateResponse(HttpStatusCode.Conflict, "Username already exists.");
+							}
+						}
+						if (response == null)
+						{
+							currentObject.CompanyId = requestParam.CompanyId;
+							currentObject.DisplayName = requestParam.DisplayName;
+							currentObject.Address = requestParam.Address;
+							currentObject.Age = requestParam.Age;
+							currentObject.AboutMe = requestParam.AboutMe;
+							currentObject.ImagePath = requestParam.ImagePath;
+							db.SaveChanges();
+							response = request.CreateResponse(HttpStatusCode.OK, requestParam);
+						}
 					}
 					else
 					{
@@ -316,9 +327,9 @@ namespace hiTaxAngularJS.Api
 		}
 
 		[Authorize]
-		[Route("api/ApplicationUsers/ChangePassword")]
-		[HttpPut]
-		public HttpResponseMessage ChangePassword(HttpRequestMessage request, ChangePasswordViewModel requestParam)
+		[Route("api/ApplicationUsers/Insert")]
+		[HttpPost]
+		public HttpResponseMessage Insert(HttpRequestMessage request, ApplicationUserRequest requestParam)
 		{
 			return CreateHttpResponse(request, () =>
 			{
@@ -329,10 +340,64 @@ namespace hiTaxAngularJS.Api
 				}
 				else
 				{
-					var result = UserManager.ChangePassword(User.Identity.GetUserId(), requestParam.OldPassword, requestParam.NewPassword);
+					var checkUser = db.ApplicationUsers.FirstOrDefault(m => m.Email.ToLower().Equals(requestParam.Email.ToLower()) || m.UserName.ToLower().Equals(requestParam.UserName.ToLower()));
+					if (checkUser == null)
+					{
+						var user = new ApplicationUser { UserName = requestParam.Email, Email = requestParam.Email };
+						var result = UserManager.Create(user, requestParam.PasswordHash);
+						if (result.Succeeded)
+						{
+							var currentObject = db.ApplicationUsers.Find(user.Id);
+							if (currentObject != null)
+							{
+								currentObject.CompanyId = requestParam.CompanyId;
+								currentObject.DisplayName = requestParam.DisplayName;
+								currentObject.Address = requestParam.Address;
+								currentObject.Age = requestParam.Age;
+								currentObject.AboutMe = requestParam.AboutMe;
+								currentObject.ImagePath = requestParam.ImagePath;
+								db.SaveChanges();
+								response = request.CreateResponse(HttpStatusCode.OK, requestParam);
+							}
+							else
+							{
+								response = request.CreateResponse(HttpStatusCode.NotFound, requestParam);
+							}
+						}
+						else
+						{
+							response = request.CreateResponse(HttpStatusCode.InternalServerError, requestParam);
+						}
+					}
+					else
+					{
+						response = request.CreateResponse(HttpStatusCode.Conflict, "Username already exists.");
+					}
+
+				}
+				return response;
+			});
+		}
+
+		[Authorize]
+		[Route("api/ApplicationUsers/ChangePassword/{id}")]
+		[HttpPut]
+		public HttpResponseMessage ChangePassword(HttpRequestMessage request, ChangePasswordViewModel requestParam, string id)
+		{
+			return CreateHttpResponse(request, () =>
+			{
+				HttpResponseMessage response = null;
+				if (!ModelState.IsValid)
+				{
+					request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+				}
+				else
+				{
+					var userId = id == null || id == "0" ? User.Identity.GetUserId() : id;
+					var result = UserManager.ChangePassword(userId, requestParam.OldPassword, requestParam.NewPassword);
 					if (result.Succeeded)
 					{
-						var user = UserManager.FindById(User.Identity.GetUserId());
+						var user = UserManager.FindById(userId);
 						if (user != null)
 						{
 							SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -343,6 +408,30 @@ namespace hiTaxAngularJS.Api
 					{
 						response = request.CreateResponse(HttpStatusCode.Forbidden, "Old password incorect.");
 					}
+				}
+				return response;
+			});
+		}
+
+		[Authorize(Roles = "SPAdmin")]
+		[Route("api/ApplicationUsers/UpdateRole")]
+		[HttpPut]
+		public HttpResponseMessage UpdateRole(HttpRequestMessage request, ApplicationUserRoleRequest requestParam)
+		{
+			return CreateHttpResponse(request, () =>
+			{
+				HttpResponseMessage response = null;
+				if (!ModelState.IsValid)
+				{
+					request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+				}
+				else
+				{
+					foreach (var role in requestParam.Roles)
+					{
+						UserManager.AddToRole(requestParam.Id, role);
+					}
+					response = request.CreateResponse(HttpStatusCode.OK, requestParam);
 				}
 				return response;
 			});
