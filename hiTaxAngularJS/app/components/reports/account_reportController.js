@@ -60,7 +60,7 @@
 					if (x.ValueTax = 0.19) {
 						revenue19 += x.Value;
 					}
-					if (x.ValueTax = 0.7) {
+					if (x.ValueTax = 0.07) {
 						revenue70 += x.Value;
 					}
 					if (x.ValueTax = 0) {

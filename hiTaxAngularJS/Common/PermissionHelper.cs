@@ -67,9 +67,12 @@ namespace hiTaxAngularJS.Common
 				var currentRoles = this.UserManager.GetRoles(currentUserId);
 				var company = db.Companies.Find(applicationUser.CompanyId);
 				var companyName = company != null ? company.CompanyName : string.Empty;
+				var department = db.Departments.Find(applicationUser.DepartmentId);
+				var departmentName = department != null ? department.DepartmentName : string.Empty;
 				var result = new ApplicationUserResponse();
 				result.Id = applicationUser.Id;
 				result.CompanyId = applicationUser.CompanyId;
+				result.DepartmentId = applicationUser.DepartmentId;
 				result.DisplayName = applicationUser.DisplayName;
 				result.ImagePath = applicationUser.ImagePath;
 				result.Address = applicationUser.Address;
@@ -80,6 +83,7 @@ namespace hiTaxAngularJS.Common
 				result.UserName = applicationUser.UserName;
 				result.Roles = currentRoles.ToList();
 				result.CompanyName = companyName;
+				result.DepartmentName = departmentName;
 				result.IsSPAdmin = currentRoles.Any(m => m.Equals("SPAdmin"));
 				result.IsDirector = currentRoles.Any(m => m.Equals("Director"));
 				result.IsStaff = currentRoles.Any(m => m.Equals("Staff"));

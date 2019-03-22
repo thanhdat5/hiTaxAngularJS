@@ -38,8 +38,14 @@
 							</div>
 							<div class="form-group">
 								<label>Company</label>
-								<select class="form-control" ng-model="popupModel.CompanyId">
-									<option ng-selected="popupModel.CompanyId == item.Id" ng-repeat="item in allCompany" value="{{item.Id}}">{{item.CompanyName}}</option>
+								<select class="form-control" ng-model="popupModel.CompanyId" ng-change="companyChange()">
+									<option ng-repeat="item in allCompany" value="{{item.Id}}" ng-value="item.Id">{{item.CompanyName}}</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Department</label>
+								<select class="form-control" ng-model="popupModel.DepartmentId" ng-disabled="!popupModel.CompanyId || popupModel.CompanyId == null || popupModel.CompanyId == ''">
+									<option ng-repeat="item in allDepartment" value="{{item.Id}}" ng-value="item.Id">{{item.DepartmentName}}</option>
 								</select>
 							</div>
 						</div>

@@ -145,5 +145,26 @@ namespace hiTaxAngularJS.api
 				return response;
 			});
 		}
+
+		[Route("GetByCompanyId")]
+		public HttpResponseMessage GetByCompanyId(HttpRequestMessage request, int id)
+		{
+			return CreateHttpResponse(request, () =>
+			{
+				var result = db.Departments.Where(m => !m.IsDeleted).Select(m => new DepartmentResponse
+				{
+					Id = m.Id,
+					DepartmentName = m.DepartmentName,
+					CompanyId = m.CompanyId,
+					CompanyName = m.Company != null ? m.Company.CompanyName : "",
+					Address = m.Address
+				})
+				.Where(m => m.CompanyId == id)
+				.OrderBy(m => m.DepartmentName).ToList();
+
+				HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, result);
+				return response;
+			});
+		}
 	}
 }

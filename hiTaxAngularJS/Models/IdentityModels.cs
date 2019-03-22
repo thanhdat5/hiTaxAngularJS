@@ -10,6 +10,7 @@ namespace hiTaxAngularJS.Models
     public class ApplicationUser : IdentityUser
     {
 		public int CompanyId { get; set; }
+		public int DepartmentId { get; set; }
 		public string DisplayName { get; set; }
 		public string ImagePath { get; set; }
 		public string Address { get; set; }

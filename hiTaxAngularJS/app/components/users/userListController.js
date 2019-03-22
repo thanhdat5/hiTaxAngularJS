@@ -7,6 +7,7 @@
 
 		// Declare variable
 		$scope.allCompany = [];
+		$scope.allDepartment = [];
 
 		// Set data dropdownlist
 		function loadMasterData() {
@@ -17,6 +18,18 @@
 			});
 		}
 		loadMasterData();
+
+		$scope.companyChange = function () {
+			if (!$scope.popupModel.CompanyId || $scope.popupModel.CompanyId == null || $scope.popupModel.CompanyId == "") {
+				$scope.allDepartment = [];
+			} else {
+				apiService.get('/api/Departments/GetByCompanyId?id=' + $scope.popupModel.CompanyId, null, function (response) {
+					$scope.allDepartment = response.data || [];
+				}, function () {
+					$scope.allDepartment = [];
+				});
+			}
+		}
 
 		// Set data gridview
 		$scope.mainGridOptions = {
@@ -93,6 +106,10 @@
 					title: "Company"
 				},
 				{
+					field: "DepartmentName",
+					title: "Department"
+				},
+				{
 					field: "Roles",
 					title: "Roles",
 					template: function (dataItem) {
@@ -151,6 +168,7 @@
 			$scope.popupTitle = "Edit item";
 			dataItem.Age = dataItem != null && dataItem.Age != null ? parseInt(dataItem.Age) : null;
 			$scope.popupModel = JSON.parse(JSON.stringify(dataItem));
+			$scope.companyChange();
 			showModal();
 		}
 

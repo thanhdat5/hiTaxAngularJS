@@ -195,9 +195,12 @@ namespace hiTaxAngularJS.Api
 					var currentRoles = this.UserManager.GetRoles(currentUserId);
 					var company = db.Companies.Find(applicationUser.CompanyId);
 					var companyName = company != null ? company.CompanyName : string.Empty;
+					var department = db.Departments.Find(applicationUser.DepartmentId);
+					var departmentName = department != null ? department.DepartmentName : string.Empty;
 					var result = new ApplicationUserResponse();
 					result.Id = applicationUser.Id;
 					result.CompanyId = applicationUser.CompanyId;
+					result.DepartmentId = applicationUser.DepartmentId;
 					result.DisplayName = applicationUser.DisplayName;
 					result.ImagePath = applicationUser.ImagePath;
 					result.Address = applicationUser.Address;
@@ -208,6 +211,7 @@ namespace hiTaxAngularJS.Api
 					result.UserName = applicationUser.UserName;
 					result.Roles = currentRoles.ToList();
 					result.CompanyName = companyName;
+					result.DepartmentName = departmentName;
 					result.IsSPAdmin = currentRoles.Any(m => m.Equals("SPAdmin"));
 					result.IsDirector = currentRoles.Any(m => m.Equals("Director"));
 					result.IsStaff = currentRoles.Any(m => m.Equals("Staff"));
@@ -236,12 +240,15 @@ namespace hiTaxAngularJS.Api
 					Email = m.Email,
 					PhoneNumber = m.PhoneNumber,
 					UserName = m.UserName,
-					CompanyName = string.Empty
+					DepartmentId = m.DepartmentId,
+					CompanyName = string.Empty,
+					DepartmentName = string.Empty
 				}).OrderBy(m => m.UserName).ToList();
 				foreach (var item in result)
 				{
 					item.Roles = this.UserManager.GetRoles(item.Id).ToList();
 					item.CompanyName = GetCompanyNameById(item.CompanyId);
+					item.DepartmentName = GetDepartmentNameById(item.DepartmentId);
 				}
 				HttpResponseMessage response = request.CreateResponse(HttpStatusCode.OK, result);
 				return response;
@@ -253,6 +260,13 @@ namespace hiTaxAngularJS.Api
 			string rs;
 			var company = db.Companies.FirstOrDefault(m => !m.IsDeleted && m.Id == id);
 			rs = company != null ? company.CompanyName : string.Empty;
+			return rs;
+		}
+		private string GetDepartmentNameById(int id)
+		{
+			string rs;
+			var department = db.Departments.FirstOrDefault(m => !m.IsDeleted && m.Id == id);
+			rs = department != null ? department.DepartmentName : string.Empty;
 			return rs;
 		}
 
@@ -308,6 +322,7 @@ namespace hiTaxAngularJS.Api
 						if (response == null)
 						{
 							currentObject.CompanyId = requestParam.CompanyId;
+							currentObject.DepartmentId = requestParam.DepartmentId;
 							currentObject.DisplayName = requestParam.DisplayName;
 							currentObject.Address = requestParam.Address;
 							currentObject.Age = requestParam.Age;
@@ -351,6 +366,7 @@ namespace hiTaxAngularJS.Api
 							if (currentObject != null)
 							{
 								currentObject.CompanyId = requestParam.CompanyId;
+								currentObject.DepartmentId = requestParam.DepartmentId;
 								currentObject.DisplayName = requestParam.DisplayName;
 								currentObject.Address = requestParam.Address;
 								currentObject.Age = requestParam.Age;

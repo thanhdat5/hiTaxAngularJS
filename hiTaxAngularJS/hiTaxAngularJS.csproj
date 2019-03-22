@@ -311,6 +311,10 @@
     <Compile Include="Migrations\201812141744486_UpdateNullable.Designer.cs">
       <DependentUpon>201812141744486_UpdateNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903221621594_AddDepartmentId.cs" />
+    <Compile Include="Migrations\201903221621594_AddDepartmentId.Designer.cs">
+      <DependentUpon>201903221621594_AddDepartmentId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -5174,6 +5178,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812141744486_UpdateNullable.resx">
       <DependentUpon>201812141744486_UpdateNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221621594_AddDepartmentId.resx">
+      <DependentUpon>201903221621594_AddDepartmentId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
