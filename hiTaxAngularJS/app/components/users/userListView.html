@@ -139,9 +139,9 @@
 						<label>Roles <span class="text-danger">*</span></label>
 						<div class="checkbox">
 							<label>
-								<input ng-model="changePermissionModel.IsSPAdmin" type="checkbox" /> <span ng-click="chkPermissionClick($event, 1)">SP Admin</span><br />
-								<input ng-model="changePermissionModel.IsDirector" type="checkbox" /> <span ng-click="chkPermissionClick($event, 2)">Director</span><br />
-								<input ng-model="changePermissionModel.IsStaff" type="checkbox" /> <span ng-click="chkPermissionClick($event, 3)">Staff</span>
+								<span ng-if="isSPAdmin"><input ng-model="changePermissionModel.IsSPAdmin" type="checkbox" /> <span ng-click="chkPermissionClick($event, 1)">SP Admin</span><br /></span>
+								<span ng-if="isSPAdmin"><input ng-model="changePermissionModel.IsDirector" type="checkbox" /> <span ng-click="chkPermissionClick($event, 2)">Director</span><br /></span>
+								<span ng-if="isSPAdmin"><input ng-model="changePermissionModel.IsStaff" type="checkbox" /> <span ng-click="chkPermissionClick($event, 3)">Staff</span></span>
 							</label>
 						</div>
 					</div>

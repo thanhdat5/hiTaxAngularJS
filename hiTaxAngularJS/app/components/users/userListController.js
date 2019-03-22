@@ -1,16 +1,17 @@
 ﻿(function (app) {
 	app.controller("userListController", userListController);
-	userListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService', 'authData'];
-	function userListController($scope, $rootScope, apiService, $ngBootbox, notificationService, authData) {
+	userListController.$inject = ['$scope', '$rootScope', 'apiService', '$ngBootbox', 'notificationService', 'authData', '$location'];
+	function userListController($scope, $rootScope, apiService, $ngBootbox, notificationService, authData, $location) {
 		// Set page title
 		$rootScope.pageTitle = "User Management";
-
+		$scope.isSPAdmin = false;
 		// Declare variable
 		$scope.allCompany = [];
 		$scope.allDepartment = [];
 
 		// Set data dropdownlist
 		function loadMasterData() {
+			$scope.isSPAdmin = $rootScope.isSPAdmin;
 			apiService.get('/api/Companies/GetAll', null, function (response) {
 				$scope.allCompany = response.data || [];
 			}, function () {
@@ -119,10 +120,9 @@
 				{
 					title: "Action",
 					template: function (dataItem) {
-						var isAdmin = dataItem.Roles.indexOf("SPAdmin") == -1;
-						return '<span><button type="button" ng-click="showUpdatePermission(dataItem)" class="btn btn-xs btn-info">Update Permission</button>&nbsp;</span><button type="button" ng-click="showChangePasswordModal(dataItem)" class="btn btn-xs btn-warning">Change password</button>&nbsp;<button class="btn btn-primary btn-xs" ng-click="editItem(dataItem)"><span class="fa fa-edit"></span></button>&nbsp;<button class="btn btn-danger btn-xs" ng-click="deleteItem(dataItem)"><span class="fa fa-trash"></span></button>';
+						return '<span><button ng-if="isSPAdmin" type="button" ng-click="showUpdatePermission(dataItem)" class="btn btn-xs btn-info">Update Permission</button>&nbsp;</span><button type="button" ng-click="showChangePasswordModal(dataItem)" class="btn btn-xs btn-warning">Change password</button>&nbsp;<button class="btn btn-primary btn-xs" ng-click="editItem(dataItem)"><span class="fa fa-edit"></span></button>&nbsp;<button class="btn btn-danger btn-xs" ng-click="deleteItem(dataItem)"><span class="fa fa-trash"></span></button>';
 					},
-					width: "330px"
+					width: $scope.isSPAdmin ? "330px" : "220px"
 				}
 			]
 		};
@@ -265,6 +265,7 @@
 
 		// Hide Modal
 		$scope.closeModal = function () {
+			$scope.storedSPAdmin = null;
 			$scope.popupModel = {};
 			$scope.changePasswordModal = {};
 			$scope.changePermissionModel = {};
@@ -287,6 +288,7 @@
 			};
 			$('#change-password-modal').modal('show');
 		}
+		$scope.storedSPAdmin = null;
 		$scope.showUpdatePermission = function (dataItem) {
 			$scope.changePermissionModel = {
 				Id: dataItem.Id,
@@ -295,6 +297,7 @@
 				IsDirector: dataItem.Roles.indexOf("Director") != -1,
 				IsStaff: dataItem.Roles.indexOf("Staff") != -1,
 			};
+			$scope.storedSPAdmin = $scope.changePermissionModel.IsSPAdmin;
 			$('#change-permission-modal').modal('show');
 		}
 		function reloadGrid() {
@@ -319,17 +322,29 @@
 					Id: $scope.changePermissionModel.Id,
 					Roles: roles
 				};
-				apiService.put('/api/ApplicationUsers/UpdateRole', postData,
-					function (success) {
-						notificationService.displaySuccess('User roles was changed successfully.');
-						$scope.closeModal();
-						reloadGrid();
-					},
-					function (error) {
-						notificationService.displayError(error.data);
+				if ($scope.storedSPAdmin == true && !$scope.changePermissionModel.IsSPAdmin) {
+					if (confirm("Are you sure you want to remove SP Admin role for this user?")) {
+						callAPIToUpdateRole(postData);
 					}
-				);
+				} else {
+					callAPIToUpdateRole(postData);
+				}
 			}
+		}
+
+		function callAPIToUpdateRole(postData) {
+			apiService.put('/api/ApplicationUsers/UpdateRole', postData,
+				function (success) {
+					notificationService.displaySuccess('User roles was changed successfully.');
+					$scope.closeModal();
+					reloadUserInfor();
+					reloadGrid();
+					$scope.storedSPAdmin = null;
+				},
+				function (error) {
+					notificationService.displayError(error.data);
+				}
+			);
 		}
 
 		$scope.chkPermissionClick = function (event, type) {
@@ -348,6 +363,42 @@
 					break;
 				}
 			}
+		}
+
+		function reloadUserInfor() {
+			// Get user info
+			apiService.get('/api/ApplicationUsers/GetProfile', null, function (response) {
+				if (response) {
+					authData.authenticationData.UserInfo = response.data;
+					$rootScope.userLoggedDisplayName = response.data.DisplayName;
+					sessionStorage.hiTaxUserLoggedInfo = JSON.stringify(response.data);
+
+					var currentRoles = response.data.Roles.join(',');
+					$rootScope.isSPAdmin = currentRoles.indexOf("SPAdmin") != -1;
+					$rootScope.isDirector = currentRoles.indexOf("Director") != -1;
+					$rootScope.isStaff = currentRoles.indexOf("Staff") != -1;
+					$scope.isSPAdmin = $rootScope.isSPAdmin;
+					if (!$scope.isSPAdmin) {
+						$scope.closeModal();
+						$('.modal-backdrop').remove();
+						$location.path("/");
+					}
+				} else {
+					authData.authenticationData.UserInfo = {};
+					sessionStorage.hiTaxUserLoggedInfo = null;
+					localStorage.clear();
+					$scope.closeModal();
+					$('.modal-backdrop').remove();
+					$location.path("/login");
+				}
+			}, function () {
+				authData.authenticationData.UserInfo = {};
+				sessionStorage.hiTaxUserLoggedInfo = null;
+				localStorage.clear();
+				$scope.closeModal();
+				$('.modal-backdrop').remove();
+				$location.path("/login");
+			});
 		}
 	}
 })(angular.module('hiTax.users', ["kendo.directives"]));

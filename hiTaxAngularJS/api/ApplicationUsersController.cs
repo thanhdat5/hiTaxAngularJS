@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -432,23 +433,23 @@ namespace hiTaxAngularJS.Api
 		[Authorize(Roles = "SPAdmin")]
 		[Route("api/ApplicationUsers/UpdateRole")]
 		[HttpPut]
-		public HttpResponseMessage UpdateRole(HttpRequestMessage request, ApplicationUserRoleRequest requestParam)
+		public async Task<HttpResponseMessage> UpdateRoleAsync(HttpRequestMessage request, ApplicationUserRoleRequest requestParam)
 		{
+			HttpResponseMessage response = null;
+			if (!ModelState.IsValid)
+			{
+				request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+			}
+			else
+			{
+				var roles = await UserManager.GetRolesAsync(requestParam.Id);
+				await UserManager.RemoveFromRolesAsync(requestParam.Id, roles.ToArray());
+				await UserManager.AddToRolesAsync(requestParam.Id, requestParam.Roles.ToArray());
+				response = request.CreateResponse(HttpStatusCode.OK, UserManager.FindById(requestParam.Id));
+			}
+
 			return CreateHttpResponse(request, () =>
 			{
-				HttpResponseMessage response = null;
-				if (!ModelState.IsValid)
-				{
-					request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-				}
-				else
-				{
-					foreach (var role in requestParam.Roles)
-					{
-						UserManager.AddToRole(requestParam.Id, role);
-					}
-					response = request.CreateResponse(HttpStatusCode.OK, requestParam);
-				}
 				return response;
 			});
 		}

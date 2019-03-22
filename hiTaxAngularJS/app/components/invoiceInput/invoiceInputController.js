@@ -138,7 +138,7 @@
 			var exist = _.find($scope.allTaxValue, function (x, xIndex) {
 				return id == x.Id;
 			})
-			return exist != null ? (parseFloat(exist.Value) * 100) + "%" : "";
+			return exist != null ? (parseFloat(exist.Value) * 100).toFixed(2) + "%" : "";
 		}
 		function calculatorTotalValue() {
 			var total = 0;
@@ -186,13 +186,13 @@
 			if (!validator.validate()) {
 				return;
 			}
-			var exists = _.findIndex($scope.invoices, function (x, xIndex) {
-				return x.Code == $scope.invoiceSelectedCodeStored;
-			});
-			if (exists == -1) {
-				notificationService.displayWarning("Can not save this invoice.");
-				return;
-			} else {
+			//var exists = _.findIndex($scope.invoices, function (x, xIndex) {
+			//	return x.Code == $scope.invoiceSelectedCodeStored;
+			//});
+			//if (exists == -1) {
+			//	notificationService.displayWarning("Can not save this invoice.");
+			//	return;
+			//} else {
 				// Call api to save item
 				var postData = [];
 				postData.push($scope.invoiceSelected);
@@ -209,7 +209,7 @@
 						notificationService.displayErrorValidation(error);
 					}
 				);
-			}
+			//}
 		}
 
 		// Save all invoices

@@ -206,7 +206,10 @@ namespace hiTaxAngularJS.api
 							input.Code = item.Code;
 							input.CreatedDate = item.CreatedDate;
 							input.Value = item.Value;
-							input.CompanyId = currentUserInfo.CompanyId;
+							if (item.CompanyId != 0 && currentUserInfo.CompanyId != 0)
+							{
+								input.CompanyId = currentUserInfo.CompanyId;
+							} 
 							input.CustomerId = item.CustomerId;
 							input.IsIn = item.IsIn;
 

@@ -30,13 +30,13 @@
 						<div class="col-md-3 col-sm-6">
 							<div class="form-group">
 								<label>Invoice #&nbsp;<span style="color:red">*</span></label>
-								<input type="text" class="form-control" ng-model="invoiceSelected.Code" required validationMessage="Field is required.">
+								<input type="text" class="form-control" ng-model="invoiceSelected.Code" maxlength="50" required validationMessage="Field is required.">
 							</div>
 						</div>
 						<div class="col-md-9 col-sm-6">
 							<p class="text-right">
 								<button class="btn btn-xs btn-success" ng-disabled="(invoiceSelected.Code == '' || invoiceSelected.CreatedDate == '' || invoiceSelected.CustomerId == '' || invoiceSelected.Value == '')" ng-click="saveItem()"><i class="fa fa-save fa-fw"></i></button>
-								<button class="btn btn-xs btn-danger" ng-click="deleteItem()"><i class="fa fa-trash fa-fw"></i></button>
+								<button class="btn btn-xs btn-danger" type="button" ng-click="deleteItem()"><i class="fa fa-trash fa-fw"></i></button>
 							</p>
 						</div>
 					</div>
