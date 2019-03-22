@@ -25,14 +25,14 @@
 					<div class="form-group">
 						<label>Company <span class="text-danger">*</span></label>
 						<select class="form-control" name="CompanyId" ng-model="popupModel.CompanyId" required validationMessage="Field is required.">
-							<option value="">All</option>
+							<option value="">--Select--</option>
 							<option ng-repeat="item in allCompany" ng-selected="popupModel.CompanyId == item.Id" value="{{item.Id}}">{{item.CompanyName}}</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label>Unit <span class="text-danger">*</span></label>
 						<select class="form-control" name="CompanyId" ng-model="popupModel.UnitId" required validationMessage="Field is required.">
-							<option value="">All</option>
+							<option value="">--Select--</option>
 							<option ng-repeat="item in allUnit" ng-selected="popupModel.UnitId == item.Id" value="{{item.Id}}">{{item.Name}}</option>
 						</select>
 					</div>

@@ -413,6 +413,7 @@
     <Content Include="app\shared\directives\pagerDirective.js" />
     <Content Include="app\shared\directives\hitax-date-range-picker.directive.js" />
     <Content Include="app\shared\directives\hitax-date-range-picker.html" />
+    <Content Include="app\shared\filters\germanyFormatNumberFilter.js" />
     <Content Include="app\shared\filters\statusFilter.js" />
     <Content Include="app\shared\modules\hiTax.common.js" />
     <Content Include="app\shared\services\apiService.js" />

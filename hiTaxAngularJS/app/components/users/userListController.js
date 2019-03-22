@@ -313,5 +313,23 @@
 				);
 			}
 		}
+
+		$scope.chkPermissionClick = function (event, type) {
+			event.preventDefault();
+			switch (type) {
+				case 1: {
+					$scope.changePermissionModel.IsSPAdmin = !$scope.changePermissionModel.IsSPAdmin;
+					break;
+				}
+				case 2: {
+					$scope.changePermissionModel.IsDirector = !$scope.changePermissionModel.IsDirector;
+					break;
+				}
+				case 3: {
+					$scope.changePermissionModel.IsStaff = !$scope.changePermissionModel.IsStaff;
+					break;
+				}
+			}
+		}
 	}
 })(angular.module('hiTax.users', ["kendo.directives"]));

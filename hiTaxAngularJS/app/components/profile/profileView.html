@@ -19,7 +19,7 @@
 								<div class="profile-info-name"> Company<span class="text-danger">*</span> </div>
 								<div class="profile-info-value">
 									<select class="form-control" name="CompanyId" ng-model="userInfo.CompanyId" required validationMessage="Field is required." ng-disabled="true">
-										<option ng-selected="userInfo.CompanyId == 0" value="0">All</option>
+										<option ng-selected="userInfo.CompanyId == 0" value="0">--Select--</option>
 										<option ng-repeat="item in allCompany" ng-selected="userInfo.CompanyId == item.Id" value="{{item.Id}}">{{item.CompanyName}}</option>
 									</select>
 								</div>

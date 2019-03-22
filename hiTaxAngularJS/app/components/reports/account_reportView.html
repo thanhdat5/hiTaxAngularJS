@@ -53,20 +53,20 @@
 							<tbody id="report-content">
 								<tr>
 									<th style="width:200px">Costs</th>
-									<td>{{result.TotalCosts | number}}.00 € (Total)</td>
+									<td>{{result.TotalCosts | number}},00 € (Total)</td>
 								</tr>
 								<tr ng-repeat="item in result.CostDetails">
 									<td class="text-right">{{item.CategoryName}}</td>
-									<td>{{item.TotalValue | number}}.00 €</td>
+									<td>{{item.TotalValue | number}},00 €</td>
 								</tr>
 								<tr>
 									<th>Revenue</th>
-									<td>{{result.TotalRevenue | number}}.00 € (Total)</td>
+									<td>{{result.TotalRevenue | number}},00 € (Total)</td>
 								</tr>
-								<tr><td class="text-right">Revenue domestic (19%)</td><td>{{result.Revenue19 | number}}.00 €</td></tr>
-								<tr><td class="text-right">Revenue domestic (0%)</td><td>{{result.Revenue00 | number}}.00 €</td></tr>
-								<tr><td class="text-right">Revenue overseas (7%)</td><td>{{result.Revenue70 | number}}.00 €</td></tr>
-								<tr><th>Result (vari.)</th><td>{{(result.TotalRevenue - result.TotalCosts) | number}}.00 €</td></tr>
+								<tr><td class="text-right">Revenue domestic (19%)</td><td>{{result.Revenue19 | number}},00 €</td></tr>
+								<tr><td class="text-right">Revenue domestic (0%)</td><td>{{result.Revenue00 | number}},00 €</td></tr>
+								<tr><td class="text-right">Revenue overseas (7%)</td><td>{{result.Revenue70 | number}},00 €</td></tr>
+								<tr><th>Result (vari.)</th><td>{{(result.TotalRevenue - result.TotalCosts) | number}},00 €</td></tr>
 							</tbody>
 						</table>
 					</div>
